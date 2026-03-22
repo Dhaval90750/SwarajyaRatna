@@ -23,9 +23,11 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl h-20 bg-white/70 backdrop-blur-xl border border-primary/20 rounded-[2rem] flex items-center justify-between px-6 md:px-10 z-[100] shadow-[0_10px_40px_rgba(255,153,51,0.1)]">
-      <Link href="/" className="flex items-center gap-3 text-xl md:text-2xl font-extrabold text-primary font-devanagari group whitespace-nowrap">
-        <Image src="/images/logo.png" alt="SwarajyaRatna Logo" width={40} height={40} className="object-contain drop-shadow-[0_0_10px_rgba(255,153,51,0.4)] group-hover:scale-110 transition-transform duration-500" />
-        <span className="hidden sm:inline">SwarajyaRatna</span>
+      <Link href="/" className="flex items-center gap-2 md:gap-3 text-lg md:text-2xl font-extrabold text-primary font-devanagari group whitespace-nowrap">
+        <div className="relative w-8 h-8 md:w-10 md:h-10">
+          <Image src="/images/logo-transparent.png" alt="SwarajyaRatna Logo" fill className="object-contain drop-shadow-[0_0_10px_rgba(255,153,51,0.4)] group-hover:scale-110 transition-transform duration-500" />
+        </div>
+        <span className="inline">SwarajyaRatna</span>
       </Link>
 
       <div className="hidden lg:flex items-center gap-2">

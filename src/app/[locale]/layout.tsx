@@ -9,6 +9,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingActionButton from '@/components/FloatingActionButton';
 import CustomCursor from '@/components/CustomCursor';
+import LoadingScreen from '@/components/LoadingScreen';
 
 const eczar = Eczar({
   subsets: ['devanagari', 'latin'],
@@ -89,6 +90,7 @@ export default async function LocaleLayout(
     <html lang={locale} className={`${eczar.variable} ${gotu.variable} ${kalam.variable} ${yatraOne.variable} ${tiroDevanagari.variable}`} suppressHydrationWarning>
       <body className="antialiased min-h-screen flex flex-col font-sans overflow-x-hidden p-0 m-0">
         <NextIntlClientProvider messages={messages}>
+          <LoadingScreen />
           <CustomCursor />
           <Navbar />
           {props.children}

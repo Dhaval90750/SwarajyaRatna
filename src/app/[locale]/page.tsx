@@ -39,20 +39,20 @@ export default function HomePage() {
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1.2, ease: 'easeOut', delay: 0.2 }}
-          className="relative z-20 text-center px-4 max-w-4xl mx-auto flex flex-col items-center"
+          className="relative z-20 text-center px-6 max-w-4xl mx-auto flex flex-col items-center pt-20 md:pt-0"
         >
-          <h1 className="text-5xl md:text-7xl lg:text-9xl font-extrabold text-primary mb-6 font-manthan drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)]">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-extrabold text-primary mb-4 md:mb-6 font-manthan drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)] leading-tight">
             {t('title')}
           </h1>
-          <p className="text-xl md:text-3xl text-foreground font-bold font-info mb-12 drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] max-w-2xl px-4">
+          <p className="text-lg sm:text-xl md:text-3xl text-foreground font-bold font-info mb-8 md:mb-12 drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] max-w-2xl px-4 italic">
             {t('tagline')}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto px-4 sm:px-0 mt-4">
             <Link href="/register" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full text-xl h-16 px-12 rounded-full font-black shadow-[0_15px_45px_rgba(255,153,51,0.35)] hover:shadow-[0_15px_60px_rgba(255,153,51,0.5)] transition-all bg-primary text-white border-none">{t('heroCtaJoin')}</Button>
+              <Button size="lg" className="w-full text-lg md:text-xl h-14 md:h-16 px-8 md:px-12 rounded-full font-black shadow-[0_10px_30px_rgba(255,153,51,0.3)] hover:shadow-[0_15px_50px_rgba(255,153,51,0.5)] transition-all bg-primary text-white border-none">{t('heroCtaJoin')}</Button>
             </Link>
             <Link href="https://www.youtube.com/@SwarajyaRatna" target="_blank" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full text-xl h-16 px-12 rounded-full font-bold border-primary text-primary hover:bg-primary/5 bg-white/50 backdrop-blur-md transition-all">{t('heroCtaWatch')}</Button>
+              <Button variant="outline" size="lg" className="w-full text-lg md:text-xl h-14 md:h-16 px-8 md:px-12 rounded-full font-bold border-primary text-primary hover:bg-primary/5 bg-white/40 backdrop-blur-md transition-all">{t('heroCtaWatch')}</Button>
             </Link>
           </div>
         </MotionDiv>

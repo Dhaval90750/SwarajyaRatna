@@ -1,3 +1,7 @@
-// This file is deprecated. 
-// We are using zero-dependency Web3Forms Fetch API for Email delivery instead to bypass NPM build errors.
-export const supabase = null;
+// Zero-dependency Supabase initialization using Fetch API
+export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+export const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.warn("Supabase credentials missing in .env");
+}
