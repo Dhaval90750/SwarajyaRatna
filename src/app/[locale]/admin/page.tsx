@@ -12,6 +12,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const ADMIN_PASS = "SwarajyaRatna@2022";
 
@@ -27,10 +28,15 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     setLoading(true);
+    setError(null);
     try {
       const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
       const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-      if (!url || !key) return;
+      
+      if (!url || !key) {
+        setError("Missing Supabase Keys: Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to Vercel and Redeploy.");
+        return;
+      }
 
       const res = await fetch(`${url}/rest/v1/registrations?select=*&order=created_at.desc`, {
         headers: {
@@ -38,10 +44,17 @@ export default function AdminDashboard() {
           "Authorization": `Bearer ${key}`
         }
       });
+      
+      if (!res.ok) {
+        const errJson = await res.json();
+        setError(`Database Error: ${errJson.message || res.statusText}. Did you run the SQL script?`);
+        return;
+      }
+
       const json = await res.json();
       setData(json);
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      setError(`Connection Failed: ${e.message}`);
     } finally {
       setLoading(false);
     }
@@ -161,9 +174,17 @@ export default function AdminDashboard() {
 
         {/* Table/List */}
         <div className="grid gap-6">
+          {error && (
+            <div className="bg-red-50 border-2 border-red-100 p-8 rounded-[2rem] text-center">
+               <span className="text-4xl mb-4 block">⚠️</span>
+               <h3 className="text-xl font-black text-red-600 mb-2">Connectivity Issue</h3>
+               <p className="text-red-500 font-bold italic">{error}</p>
+               <Button onClick={fetchData} className="mt-6 bg-red-500 hover:bg-red-600">Try Reconnecting</Button>
+            </div>
+          )}
           {loading ? (
-            <div className="py-20 text-center animate-pulse text-primary font-black text-xl italic">Loading Database...</div>
-          ) : filteredData.map((item, idx) => (
+            <div className="py-20 text-center animate-pulse text-primary font-black text-xl italic">Connecting to Supabase...</div>
+          ) : !error && filteredData.map((item, idx) => (
             <MotionDiv 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
