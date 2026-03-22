@@ -1,0 +1,96 @@
+{
+  "HomePage": {
+    "title": "SwarajyaRatna",
+    "tagline": "Swarajyacha Dhyas, Ratna cha Gaurav",
+    "heroCtaJoin": "Join Us",
+    "heroCtaWatch": "Watch Our Work",
+    "aboutHeading": "Our Journey",
+    "aboutText": "SwarajyaRatna is a cultural initiative started in 2022 by 7 passionate members in Pune. Today, it has grown into a family of 100+ active members dedicated to spreading awareness through creative and digital mediums.",
+    "statsFounded": "Founded",
+    "statsMembers": "Active Members",
+    "statsTeam": "Core Team",
+    "videosHeading": "Featured Work",
+    "videosMore": "Watch More on YouTube",
+    "activitiesHeading": "Our Activities",
+    "activityDrama": "Drama Acts",
+    "activityDance": "Dance Performances",
+    "activityDigital": "Digital Initiatives",
+    "activityEdu": "Cultural Education",
+    "ctaHeading": "Become a Part of SwarajyaRatna",
+    "ctaButton": "Register Now"
+  },
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "team": "Team",
+    "activities": "Activities",
+    "gallery": "Gallery",
+    "register": "Register",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "AboutPage": {
+    "visionHeading": "Vision",
+    "visionText": "To create a culturally aware and united society inspired by Swarajya values.",
+    "missionHeading": "Mission",
+    "missionText": "To educate and inspire all age groups through creative storytelling, performances, and digital platforms.",
+    "journeyHeading": "Our Journey",
+    "journeyText": "What began in 2022 with just 7 members has now become a strong community of 100+ individuals working towards a shared vision."
+  },
+  "TeamPage": {
+    "coreHeading": "Core Members",
+    "advisorsHeading": "Advisors Panel",
+    "roles": {
+      "overall": "Overall Management",
+      "backstage": "Backstage & Drapery",
+      "community": "Community Builder",
+      "history": "History Advisor",
+      "expense": "Expense Manager",
+      "dance": "Dance & Choreography",
+      "tech": "Technical Head",
+      "mainGuide": "Main Supporter & Guide"
+    }
+  },
+  "ActivitiesPage": {
+    "pageHeading": "Our Activities",
+    "dramaTitle": "Drama",
+    "dramaDesc": "Stage storytelling based on history",
+    "danceTitle": "Dance",
+    "danceDesc": "Cultural and thematic performances",
+    "digitalTitle": "Digital Initiatives",
+    "digitalDesc": "Website, App, and online awareness campaigns",
+    "communityTitle": "Community Engagement",
+    "communityDesc": "Workshops and youth programs to foster connection"
+  },
+  "RegisterPage": {
+    "pageHeading": "Registration",
+    "name": "Full Name",
+    "age": "Age",
+    "gender": "Gender",
+    "contact": "Contact Number",
+    "email": "Email",
+    "city": "City",
+    "interest": "Interest Area",
+    "experience": "Experience (optional)",
+    "whyJoin": "Why do you want to join?",
+    "submit": "Register Now",
+    "success": "Welcome to SwarajyaRatna Family!",
+    "interests": {
+      "drama": "Drama",
+      "dance": "Dance",
+      "tech": "Technical",
+      "management": "Management",
+      "history": "History"
+    }
+  },
+  "GalleryPage": {
+    "pageHeading": "Gallery"
+  },
+  "ContactPage": {
+    "pageHeading": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message"
+  }
+}

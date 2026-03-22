@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-saffron: #FF9933;
+  --color-dark-brown: #3E2723;
+  --color-primary: var(--color-saffron);
+  --font-sans: var(--font-gotu), ui-sans-serif, system-ui, sans-serif;
+  --font-devanagari: var(--font-eczar), ui-sans-serif, system-ui, sans-serif;
+  --font-manthan: var(--font-eczar), serif;
+  --font-manoja: var(--font-gotu), sans-serif;
+  --font-calligraphy: var(--font-tiro), var(--font-eczar), sans-serif;
+  --font-info: var(--font-kalam), sans-serif;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Custom Saffron Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF9933;
+  border-radius: 5px;
+  border: 2px solid white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e68a2e;
+}
+
+/* 3D Tilt perspective context */
+.perspective-1000 {
+  perspective: 1000px;
+}
