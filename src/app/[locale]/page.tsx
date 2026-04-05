@@ -2,97 +2,141 @@
 
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
-import { Button } from '@/components/ui/Button';
 import { VideoCard } from '@/components/VideoCard';
-import { BookOpen, MonitorPlay, Palette, Theater, Flag, Users, Award } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import MeherabDivider from '@/components/MeherabDivider';
+import { BookOpen, MonitorPlay, Palette, Theater } from 'lucide-react';
 import { MotionDiv } from '@/components/animations/MotionElements';
 import { AnimatedCounter } from '@/components/animations/AnimatedCounter';
-import MeherabDivider from '@/components/MeherabDivider';
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import FortRampart from '@/components/FortRampart';
+import BilingualHeader from '@/components/BilingualHeader';
+import StoneEtchedText from '@/components/animations/StoneEtchedText';
+import ShieldButton from '@/components/ShieldButton';
+import TimelineMilestone from '@/components/TimelineMilestone';
+import { useSound } from '@/context/SoundContext';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
   const scrollRef = useRef(null);
+  const { playSound } = useSound();
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start end", "end start"]
   });
 
+  const { scrollY } = useScroll();
+  const yFort = useTransform(scrollY, [0, 800], [0, 150]); 
+  const yMist = useTransform(scrollY, [0, 800], [0, 300]);
+
+  const timelinePathLength = useSpring(scrollYProgress, { stiffness: 40, damping: 20 });
+
+  // Sound Triggers
+  useEffect(() => {
+    playSound('fort_bg'); // Base layer
+  }, []);
+
+  useEffect(() => {
+    if (scrollYProgress.get() > 0.1 && scrollYProgress.get() < 0.9) {
+      playSound('marching_rhythm');
+    }
+  }, [scrollYProgress]);
+
   const timelineData = [
-    { year: "2022", icon: <Flag />, title: "The Foundation", desc: "Started with 7 dedicated members in Pune." },
-    { year: "2023", icon: <Users />, title: "Community Growth", desc: "Expanded to 50+ members across cultural and technical domains." },
-    { year: "2024", icon: <Award />, title: "Cultural Excellence", desc: "100+ active members today, reaching thousands through digital media." }
+    { year: "2022", marathiTitle: "पायाभरणी", englishTitle: "The Foundation", desc: "Started with 7 dedicated members in Pune, laying the cornerstone of the SwarajyaRatna movement." },
+    { year: "2023", marathiTitle: "सामाजिक विस्तार", englishTitle: "Community Growth", desc: "Expanded to 50+ members across cultural and technical domains, reaching local colleges." },
+    { year: "2024", marathiTitle: "सांस्कृतिक उत्कृष्टता", englishTitle: "Cultural Excellence", desc: "100+ active members today, redefining historical storytelling for the digital age." }
   ];
 
   return (
-    <main className="flex-grow flex flex-col w-full overflow-x-hidden">
-      
-      {/* Hero Section */}
-      <section className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/90 via-white/40 to-transparent z-10" />
-        <div 
-          className="absolute inset-0 bg-cover bg-center z-0 blur-[5px] scale-105 opacity-95" 
-          style={{ backgroundImage: "url('/images/hero-light.png')" }} 
-        />
-        <MotionDiv 
-          initial={{ opacity: 0, scale: 0.95, y: 30 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: 'easeOut', delay: 0.2 }}
-          className="relative z-20 text-center px-6 max-w-4xl mx-auto flex flex-col items-center pt-20 md:pt-0"
-        >
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-extrabold text-primary mb-4 md:mb-6 font-manthan drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)] leading-tight">
-            {t('title')}
-          </h1>
-          <p className="text-lg sm:text-xl md:text-3xl text-foreground font-bold font-info mb-8 md:mb-12 drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] max-w-2xl px-4 italic">
-            {t('tagline')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto px-4 sm:px-0 mt-4">
-            <Link href="/register" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full text-lg md:text-xl h-14 md:h-16 px-8 md:px-12 rounded-full font-black shadow-[0_10px_30px_rgba(255,153,51,0.3)] hover:shadow-[0_15px_50px_rgba(255,153,51,0.5)] transition-all bg-primary text-white border-none">{t('heroCtaJoin')}</Button>
-            </Link>
-            <Link href="https://www.youtube.com/@SwarajyaRatna" target="_blank" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full text-lg md:text-xl h-14 md:h-16 px-8 md:px-12 rounded-full font-bold border-primary text-primary hover:bg-primary/5 bg-white/40 backdrop-blur-md transition-all">{t('heroCtaWatch')}</Button>
-            </Link>
-          </div>
-        </MotionDiv>
+    <main className="flex-grow flex flex-col w-full overflow-x-hidden pt-0">
+      {/* Section 1: The Grand Gateway (Sunlit Proclamation) */}
+      <section className="relative w-full min-h-[85vh] md:h-screen flex items-center justify-center overflow-hidden bg-white max-w-full">
+        {/* Subtle Solar Radial Gradient Backdrop */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#ffffff_20%,_#FFF7E6_60%,_rgba(255,153,51,0.1)_100%)] z-0" />
+        <div className="absolute inset-0 bg-[url('/images/hero-light.png')] opacity-10 bg-cover bg-center mix-blend-multiply z-0 pointer-events-none" />
+        
+        {/* Layer 2: Main Proclamation Content */}
+        <div className="relative z-10 w-full max-w-5xl px-6 flex flex-col items-center text-center">
+          <StoneEtchedText 
+            text="स्वराज्यरत्न" 
+            className="text-[clamp(64px,14vw,160px)] leading-[0.8] mb-8" 
+          />
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="flex flex-col items-center w-full"
+          >
+            {/* Tagline */}
+            <div className="mb-10">
+              <BilingualHeader 
+                marathi="स्वराज्याचा ध्यास, रत्नांचा गौरव" 
+                english="Swarajyacha Dhyas, Ratnancha Gaurav"
+                className="text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.1)]"
+              />
+              <div className="h-1 w-32 bg-primary mt-6 mx-auto rounded-full shadow-[0_2px_10px_rgba(194,65,12,0.3)]" />
+            </div>
+            
+            <p className="max-w-2xl text-lg md:text-2xl uppercase tracking-[0.3em] text-primary font-black mb-16 drop-shadow-sm font-yatra leading-relaxed opacity-90">
+              {t('taglineSub')}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-8 w-full sm:w-auto">
+              <Link href="/register">
+                <ShieldButton className="w-full sm:w-auto h-20 text-3xl px-12 bg-primary hover:bg-primary/90 text-white shadow-xl">{t('heroCtaJoin')}</ShieldButton>
+              </Link>
+              <Link href="https://www.youtube.com/@SwarajyaRatna" target="_blank">
+                <ShieldButton variant="outline" className="w-full sm:w-auto h-20 text-3xl px-12 border-primary/30 text-primary hover:bg-primary/5">{t('heroCtaWatch')}</ShieldButton>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
-      <MeherabDivider type="bottom" color="fill-orange-50/20" />
+      {/* Transition: Heritage Rampart (Animated) */}
+      <motion.div 
+        animate={{ backgroundPositionX: ["0px", "1000px"] }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        className="w-full h-10 bg-[url('/images/fort-wall-pattern.png')] bg-repeat-x bg-contain relative z-0 opacity-40 grayscale"
+      />
 
-      {/* Journey Timeline */}
-      <section ref={scrollRef} className="py-24 bg-orange-50/20 px-4 overflow-hidden relative">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari text-center mb-24">Our Cultural Journey</h2>
-          
-          <div className="relative">
-            {/* Center Line */}
-            <motion.div 
-              style={{ scaleY: scrollYProgress }}
-              className="absolute left-1/2 -translate-x-1/2 w-1 bg-primary/20 h-full origin-top hidden md:block"
+      {/* Section 2: The Campaign Trail (Timeline) */}
+      <section ref={scrollRef} className="py-10 bg-[#FFF7E6] px-4 overflow-visible relative z-20">
+        {/* Parchment Texture */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('/images/hero-light.png')] mix-blend-overlay grayscale bg-cover" />
+        <div className="max-w-6xl mx-auto relative border-b border-stone-200/60 pb-10">
+          <div className="text-center mb-8">
+            <BilingualHeader 
+              marathi="आमचा सांस्कृतिक प्रवास" 
+              english="Our Cultural Journey"
+              className="mb-4"
             />
+            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full" />
+          </div>
+          <div className="relative">
+            {/* The Drawn Campaign Path (Heritage Axis) */}
+            <div className="absolute top-1/2 left-0 w-full h-2 -translate-y-1/2 hidden md:block z-0 pointer-events-none">
+              <div className="w-full h-0.5 bg-stone-300/20 border-t border-dashed border-stone-400/40 shadow-inner" />
+              <motion.div 
+                style={{ scaleX: timelinePathLength }}
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#D4AF37] via-[#C2410C] to-[#D4AF37] origin-left shadow-[0_0_20px_rgba(194,65,12,0.6)] rounded-full" 
+              />
+            </div>
             
-            <div className="space-y-24">
+            {/* Balanced Horizontal Timeline Path */}
+            <div className="flex flex-row items-center justify-center relative w-full overflow-x-auto md:overflow-x-visible py-20 no-scrollbar px-4 md:px-0 gap-8 md:gap-16">
               {timelineData.map((item, index) => (
-                <div key={index} className={`flex flex-col md:flex-row items-center gap-8 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
-                  <div className="md:w-1/2 flex justify-center md:block">
-                    <MotionDiv 
-                      initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      className={`p-8 bg-white rounded-[2rem] shadow-xl border border-primary/10 max-w-md ${index % 2 === 1 ? 'md:text-right ml-auto' : 'mr-auto'}`}
-                    >
-                      <span className="text-primary font-black text-4xl mb-4 block">{item.year}</span>
-                      <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
-                      <p className="text-foreground/70 font-medium">{item.desc}</p>
-                    </MotionDiv>
-                  </div>
-                  
-                  <div className="relative z-10 w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white shadow-[0_0_30px_rgba(255,153,51,0.3)] border-4 border-white">
-                    {item.icon}
-                  </div>
-                  
-                  <div className="md:w-1/2 hidden md:block" />
+                <div key={index} className="shrink-0">
+                  <TimelineMilestone 
+                    year={item.year}
+                    marathiTitle={item.marathiTitle}
+                    englishTitle={item.englishTitle}
+                    desc={item.desc}
+                    delay={0.2 * index}
+                  />
                 </div>
               ))}
             </div>
@@ -101,13 +145,13 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section className="py-24 bg-background px-4">
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+      <section className="py-12 bg-background px-4 border-b border-stone-100">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-8">
           <div className="lg:w-1/2">
             <h2 className="text-3xl md:text-5xl font-extrabold text-primary mb-6 font-devanagari">{t('aboutHeading')}</h2>
             <p className="text-lg md:text-xl text-foreground/80 leading-relaxed font-info font-bold">{t('aboutText')}</p>
           </div>
-          <div className="lg:w-1/2 grid grid-cols-2 gap-6 w-full">
+          <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
              <MotionDiv 
                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
                className="p-8 bg-white border border-primary/10 hover:border-primary/30 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm">
@@ -126,20 +170,27 @@ export default function HomePage() {
              </MotionDiv>
              <MotionDiv 
                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
-               className="p-8 bg-white border border-primary/10 hover:border-primary/30 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm col-span-2">
-                <span className="text-5xl md:text-6xl font-extrabold text-primary mb-3">
+               className="p-6 bg-white border border-primary/10 hover:border-primary/30 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm">
+                <span className="text-4xl md:text-5xl font-extrabold text-primary mb-2">
                   <AnimatedCounter from={0} to={7} />
                 </span>
-                <span className="text-base font-bold text-foreground opacity-80 uppercase tracking-widest">{t('statsTeam')}</span>
+                <span className="text-[10px] font-bold text-foreground opacity-80 uppercase tracking-[0.15em]">{t('statsTeam')}</span>
              </MotionDiv>
           </div>
         </div>
       </section>
 
       {/* Video Content */}
-      <section className="py-24 px-4 bg-background relative overflow-hidden">
+      <section className="py-12 px-4 bg-background relative overflow-hidden">
+        {/* Separation Divider (Animated) */}
+        <motion.div 
+          animate={{ backgroundPositionX: ["0px", "-1000px"] }}
+          transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+          className="w-full h-8 bg-[url('/images/fort-wall-pattern.png')] bg-repeat-x bg-contain opacity-30 mb-20" 
+        />
+        
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-6">
             <div>
               <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-4">{t('videosHeading')}</h2>
               <div className="h-1 w-24 bg-primary rounded-full"></div>
@@ -159,9 +210,9 @@ export default function HomePage() {
       <MeherabDivider type="top" color="fill-orange-50/30" />
 
       {/* Core Activities */}
-      <section className="py-24 px-4 bg-orange-50/30">
+      <section className="py-12 px-4 bg-orange-50/30 border-t border-primary/5">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-16">{t('activitiesHeading')}</h2>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-8">{t('activitiesHeading')}</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <ActivityCard delay={0.1} icon={<Theater size={40} className="text-primary"/>} title={t('activityDrama')} />
             <ActivityCard delay={0.25} icon={<Palette size={40} className="text-primary"/>} title={t('activityDance')} />
@@ -171,8 +222,9 @@ export default function HomePage() {
         </div>
       </section>
 
+
       {/* Call to Action */}
-      <section className="py-32 px-4 text-center rounded-t-[3rem] shadow-2xl relative overflow-hidden mt-12 bg-orange-50 border-t border-primary/20">
+      <section className="py-24 px-4 text-center rounded-t-[3rem] shadow-2xl relative overflow-hidden mt-0 bg-orange-50 border-t border-primary/20">
         <div className="absolute inset-0 bg-cover bg-center opacity-10 blur-[2px]" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }} />
         <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/50 to-transparent" />
         
@@ -183,6 +235,7 @@ export default function HomePage() {
               {t('ctaButton')}
             </Button>
           </Link>
+          <p className="mt-8 text-primary font-bold italic text-lg lg:text-xl opacity-90">{t('serviceTagline')}</p>
         </div>
       </section>
     </main>
@@ -196,8 +249,8 @@ function ActivityCard({ icon, title, delay }: { icon: React.ReactNode, title: st
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-10, 10]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

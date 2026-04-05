@@ -5,15 +5,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoadingScreen() {
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     // Artificial delay for cinematic effect
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 1200);
 
     return () => clearTimeout(timer);
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <AnimatePresence>
@@ -21,8 +25,8 @@ export default function LoadingScreen() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center gap-8"
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          className="fixed inset-0 z-[1000] bg-orange-50 flex flex-col items-center justify-center gap-8"
         >
           <div className="relative">
              {/* Saffron Pulse */}

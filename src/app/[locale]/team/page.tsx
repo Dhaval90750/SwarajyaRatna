@@ -1,111 +1,130 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
 import { MotionDiv } from '@/components/animations/MotionElements';
 import MeherabDivider from '@/components/MeherabDivider';
+import { teamMembers, TeamMember } from '@/data/team';
+import RoyalTeamCard from '@/components/RoyalTeamCard';
+import GauravPatra from '@/components/GauravPatra';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function TeamPage() {
   const t = useTranslations('TeamPage');
+  const [activeMember, setActiveMember] = useState<TeamMember | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRefAdvisors = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const coreTeam = [
-    { name: 'Hrishikesh Tambe', roleKey: 'overall' },
-    { name: 'Dhaval Thaware', roleKey: 'backstage' },
-    { name: 'Prathamesh Shivpuje', roleKey: 'community' },
-    { name: 'Sahil Bhame', roleKey: 'history' },
-    { name: 'Sarthak Mali', roleKey: 'expense' },
-    { name: 'Ninad Chavan', roleKey: 'dance' },
-    { name: 'Tejas Chikane', roleKey: 'tech' }
-  ];
+  const coreMembers = teamMembers.filter(m => m.id !== 'jj-dhule' && m.id !== 'rutvik-kulkarni');
+  const advisorMembers = teamMembers.filter(m => m.id === 'jj-dhule' || m.id === 'rutvik-kulkarni');
 
-  const advisors = [
-    { name: 'J. J. Dhule Sir', roleKey: 'mainGuide' },
-    { name: 'Rutvik Kulkarni', roleKey: 'history' }
-  ];
+  // Auto-scroll logic
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+        if (scrollLeft >= scrollWidth - clientWidth - 10) {
+          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+        }
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isHovered]);
+
+  const scroll = (direction: 'left' | 'right', ref: React.RefObject<HTMLDivElement | null>) => {
+    if (ref.current) {
+      const scrollAmount = direction === 'left' ? -320 : 320;
+      ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   return (
-    <main className="flex-grow flex flex-col w-full overflow-x-hidden pt-28 bg-orange-50/10">
-      
-      <section className="py-20 px-4 text-center">
-        <MotionDiv 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-4xl mx-auto"
-        >
-          <h1 className="text-4xl md:text-6xl font-black text-primary font-devanagari mb-4 leading-tight">
-            {t('coreHeading')}
-          </h1>
-          <div className="h-1.5 w-24 bg-primary mx-auto rounded-full mb-12" />
+    <main className="flex-grow flex flex-col w-full overflow-x-hidden bg-orange-50/5">
+      {/* Header Section */}
+      <section className="py-20 px-4 text-center bg-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03] bg-[url('/images/hero-light.png')] grayscale" />
+        <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl mx-auto relative z-10">
+          <h1 className="text-4xl md:text-7xl font-black text-primary font-devanagari mb-4 leading-tight drop-shadow-sm">{t('coreHeading')}</h1>
+          <div className="h-1.5 w-32 bg-primary mx-auto rounded-full mb-6 shadow-md" />
+          <p className="text-stone-500 font-info text-xs md:text-sm uppercase tracking-[0.4em] font-bold">The Royal Archive of SwarajyaRatna</p>
         </MotionDiv>
-        
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
-          {coreTeam.map((member, index) => (
-            <TeamCard key={member.name} member={member} t={t} delay={index * 0.1} />
+      </section>
+
+      {/* Core Team Section */}
+      <section 
+        className="py-12 px-4 md:px-8 relative overflow-hidden group" 
+        onMouseEnter={() => setIsHovered(true)} 
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <button 
+          onClick={() => scroll('left', scrollRef)} 
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/90 border border-primary/20 shadow-2xl flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-all hover:scale-110 active:scale-95"
+          aria-label="Scroll Left"
+        >
+          <ChevronLeft size={28} />
+        </button>
+        <button 
+          onClick={() => scroll('right', scrollRef)} 
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/90 border border-primary/20 shadow-2xl flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-all hover:scale-110 active:scale-95"
+          aria-label="Scroll Right"
+        >
+          <ChevronRight size={28} />
+        </button>
+
+        <div ref={scrollRef} className="max-w-7xl mx-auto overflow-x-auto snap-x snap-mandatory scrollbar-hide flex gap-6 pb-10 px-4 md:px-0">
+          {coreMembers.map((member) => (
+            <div key={member.id} className="flex-shrink-0 w-[280px] md:w-[320px] snap-center">
+              <RoyalTeamCard member={member} onClick={() => setActiveMember(member)} />
+            </div>
           ))}
+          <div className="flex-shrink-0 w-10 h-1" />
         </div>
+        
+        {/* Fades */}
+        <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-orange-50/50 to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-orange-50/50 to-transparent pointer-events-none z-10" />
       </section>
 
       <MeherabDivider type="top" color="fill-white" />
 
-      <section className="py-24 px-4 bg-white relative">
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-4">{t('advisorsHeading')}</h2>
-          <div className="h-1 w-16 bg-primary/30 mx-auto rounded-full" />
+      {/* Advisor Section */}
+      <section className="py-24 px-4 bg-white relative overflow-hidden group">
+        <button 
+          onClick={() => scroll('left', scrollRefAdvisors)} 
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/90 border border-primary/20 shadow-2xl flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-all hover:scale-110 active:scale-95"
+          aria-label="Scroll Left"
+        >
+          <ChevronLeft size={28} />
+        </button>
+        <button 
+          onClick={() => scroll('right', scrollRefAdvisors)} 
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/90 border border-primary/20 shadow-2xl flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-all hover:scale-110 active:scale-95"
+          aria-label="Scroll Right"
+        >
+          <ChevronRight size={28} />
+        </button>
+
+        <div className="max-w-4xl mx-auto text-center mb-16 px-4">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-4 drop-shadow-sm leading-tight text-metallic-gold">{t('advisorsHeading')}</h2>
+          <div className="h-1 w-24 bg-primary/30 mx-auto rounded-full mb-4" />
+          <p className="text-stone-400 font-bold uppercase tracking-[0.2em] text-xs">Royal Proclamation Advisors</p>
         </div>
-        
-        <div className="max-w-4xl mx-auto grid sm:grid-cols-2 gap-10 px-4">
-          {advisors.map((advisor, index) => (
-            <TeamCard key={advisor.name} member={advisor} t={t} delay={index * 0.2} variant="secondary" />
+
+        <div ref={scrollRefAdvisors} className="max-w-5xl mx-auto overflow-x-auto snap-x snap-mandatory scrollbar-hide flex justify-center gap-8 pb-10 px-4 md:px-0">
+          {advisorMembers.map((member) => (
+            <div key={member.id} className="flex-shrink-0 w-[280px] md:w-[320px] snap-center">
+              <RoyalTeamCard member={member} onClick={() => setActiveMember(member)} />
+            </div>
           ))}
         </div>
       </section>
 
+      {/* Modal */}
+      <GauravPatra member={activeMember} onClose={() => setActiveMember(null)} />
     </main>
   );
 }
-
-function TeamCard({ member, t, delay, variant = 'primary' }: { member: any, t: any, delay: number, variant?: 'primary' | 'secondary' }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => { x.set(0); y.set(0); }}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay }}
-      className="group perspective-1000"
-    >
-      <div 
-        style={{ transform: "translateZ(50px)" }}
-        className={`p-10 rounded-[2.5rem] border transition-all duration-500 text-center flex flex-col items-center gap-6 h-full ${
-          variant === 'primary' 
-          ? 'bg-white border-primary/10 group-hover:border-primary/40 shadow-xl group-hover:shadow-primary/10' 
-          : 'bg-orange-50 border-primary/20 group-hover:border-primary shadow-lg'
-        }`}
-      >
-        <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center text-4xl font-black text-primary shadow-inner group-hover:scale-110 transition-transform duration-500">
-          {member.name.charAt(0)}
-        </div>
-        <div>
-          <h3 className="text-2xl font-bold text-foreground mb-1 font-sans">{member.name}</h3>
-          <p className="text-primary font-bold font-info text-lg uppercase tracking-wider">{t(`roles.${member.roleKey}`)}</p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-

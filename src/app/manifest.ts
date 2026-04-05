@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'SwarajyaRatna',
     short_name: 'SwarajyaRatna',
-    description: 'Swarajyacha Dhyas, Ratna cha Gaurav. A premier youth-driven cultural movement in Maharashtra promoting Maratha history, arts, and community engagement.',
+    description: 'Swarajyacha Dhyas, Ratnancha Gaurav. A premier youth-driven cultural movement in Maharashtra promoting Maratha history, arts, and community engagement.',
     start_url: '/',
     display: 'standalone',
     background_color: '#FF9933',

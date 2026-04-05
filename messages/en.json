@@ -1,7 +1,8 @@
 {
   "HomePage": {
     "title": "SwarajyaRatna",
-    "tagline": "Swarajyacha Dhyas, Ratna cha Gaurav",
+    "tagline": "Swarajyacha Dhyas, Ratnancha Gaurav",
+    "taglineSub": "Rediscovering India's Hidden Warrior Legacies",
     "heroCtaJoin": "Join Us",
     "heroCtaWatch": "Watch Our Work",
     "aboutHeading": "Our Journey",
@@ -17,7 +18,8 @@
     "activityDigital": "Digital Initiatives",
     "activityEdu": "Cultural Education",
     "ctaHeading": "Become a Part of SwarajyaRatna",
-    "ctaButton": "Register Now"
+    "ctaButton": "Register Now",
+    "serviceTagline": "We are ready to perform in your Cultural events!"
   },
   "Navigation": {
     "home": "Home",
@@ -27,15 +29,20 @@
     "gallery": "Gallery",
     "register": "Register",
     "contact": "Contact",
-    "language": "Language"
+    "language": "Language",
+    "instagram": "Instagram"
   },
   "AboutPage": {
     "visionHeading": "Vision",
     "visionText": "To create a culturally aware and united society inspired by Swarajya values.",
     "missionHeading": "Mission",
-    "missionText": "To educate and inspire all age groups through creative storytelling, performances, and digital platforms.",
+    "missionText": "SwarajyaRatna is a platform that showcases the untold stories of the Unsung heroes in Indian History. Focused on Education, it provides interactive content for all ages, using quizzes and maps to make history engaging and informative.",
     "journeyHeading": "Our Journey",
-    "journeyText": "What began in 2022 with just 7 members has now become a strong community of 100+ individuals working towards a shared vision."
+    "journeyText": "What began in 2022 with just 7 members has now become a strong community of 100+ individuals working towards a shared vision.",
+    "focusHeading": "Our Core Focus",
+    "focusText": "Many textbooks and publications contain false information for political reasons, leading to distorted views. At SwarajyaRatna, we aim to spread positivity by highlighting these inaccuracies and providing factual corrections backed by evidence, ensuring users access reliable information about the Maratha warriors and their true contributions.",
+    "affiliationsHeading": "Educational Affiliations",
+    "affiliationsText": "SwarajyaRatna aims to establish partnerships with National Service Scheme (NSS) units to help promote the project and engage the local community. We actively coordinate and participate in events like the KJ’s Youth Fest at KJ’s Educational Institute, Trinity College of Engineering and Research."
   },
   "TeamPage": {
     "coreHeading": "Core Members",
@@ -48,7 +55,8 @@
       "expense": "Expense Manager",
       "dance": "Dance & Choreography",
       "tech": "Technical Head",
-      "mainGuide": "Main Supporter & Guide"
+      "mainGuide": "Main Supporter & Guide",
+      "scriptWriter": "Script Writer"
     }
   },
   "ActivitiesPage": {
@@ -81,7 +89,8 @@
       "tech": "Technical",
       "management": "Management",
       "history": "History"
-    }
+    },
+    "backToHome": "Return to Swarajya"
   },
   "GalleryPage": {
     "pageHeading": "Gallery"

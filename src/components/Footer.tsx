@@ -16,6 +16,7 @@ export default function Footer() {
           <Link href="/about" className="hover:text-primary transition-colors underline-offset-4 hover:underline">{t('about')}</Link>
           <Link href="/contact" className="hover:text-primary transition-colors underline-offset-4 hover:underline">{t('contact')}</Link>
           <a href="https://www.youtube.com/@SwarajyaRatna" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors bg-primary/10 px-4 py-2 rounded-full text-primary">YouTube</a>
+          <a href="https://www.instagram.com/swarjyaratna" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors bg-pink-500/10 px-4 py-2 rounded-full text-pink-600">Instagram</a>
         </div>
       </div>
       <div className="text-center text-sm font-medium opacity-40 mt-12 pt-6 border-t border-primary/10">

@@ -2,6 +2,20 @@
 
 export async function submitRegistration(formData: FormData) {
   const object = Object.fromEntries(formData);
+  
+  // Generate a Unique Mavala ID
+  // Format: SRM-26-XXXXX (Swarajya Mavala - 2026 - 5 char random hex)
+  const randomHex = Math.random().toString(16).slice(2, 7).toUpperCase();
+  const mavalaId = `SRM-26-${randomHex}`;
+  
+  // Attach ID to both DB and Email
+  const submissionData = {
+    ...object,
+    mavala_id: mavalaId,
+    status: 'enrolled',
+    enrolled_at: new Date().toISOString()
+  };
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -15,7 +29,7 @@ export async function submitRegistration(formData: FormData) {
           "Authorization": `Bearer ${supabaseKey}`,
           "Prefer": "return=minimal"
         },
-        body: JSON.stringify(object)
+        body: JSON.stringify(submissionData)
       });
     } catch (e) {
       console.error("Supabase Save Error:", e);
@@ -27,7 +41,8 @@ export async function submitRegistration(formData: FormData) {
     try {
       const json = JSON.stringify({
         access_key: process.env.WEB3FORMS_ACCESS_KEY,
-        subject: `New Registration: ${object.fullName}`,
+        subject: `New Mavala Enlisted: ${object.fullName} [${mavalaId}]`,
+        mavala_id: mavalaId,
         ...object
       });
       await fetch("https://api.web3forms.com/submit", {
@@ -38,7 +53,7 @@ export async function submitRegistration(formData: FormData) {
     } catch (e) {}
   }
 
-  return { success: true };
+  return { success: true, mavalaId };
 }
 
 export async function submitContact(formData: FormData) {

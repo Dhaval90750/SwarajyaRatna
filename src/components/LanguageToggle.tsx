@@ -1,37 +1,33 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from '@/i18n/routing';
-import { useTransition } from 'react';
 
 export default function LanguageToggle() {
+  const { language, setLanguage } = useLanguage();
   const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
-
-  function switchLanguage(nextLocale: string) {
-    if (nextLocale === locale) return;
-    startTransition(() => {
-      router.replace(pathname, { locale: nextLocale });
-    });
-  }
 
   return (
-    <div className="flex bg-secondary/10 rounded-full p-1 overflow-hidden pointer-events-auto border">
+    <div className="flex bg-[#FFF7E6]/10 backdrop-blur-md rounded-full p-1 border border-[#D4AF37]/30 shadow-inner h-[40px]">
       <button
-        onClick={() => switchLanguage('en')}
-        disabled={isPending}
-        className={`px-3 py-1 text-sm rounded-full transition-all duration-300 font-sans ${locale === 'en' ? 'bg-primary text-white font-bold' : 'text-foreground hover:bg-secondary/20'}`}
+        onClick={() => setLanguage('en')}
+        className={`px-4 flex items-center text-[10px] font-black uppercase tracking-widest rounded-full transition-all duration-500 ${
+          language === 'en' 
+            ? 'bg-[#FFF7E6] text-[#C2410C] shadow-md border border-[#C2410C]/20' 
+            : 'text-parchment/60 hover:text-parchment hover:bg-white/5'
+        }`}
       >
-        🇬🇧 English
+        English
       </button>
       <button
-        onClick={() => switchLanguage('mr')}
-        disabled={isPending}
-        className={`px-3 py-1 text-sm rounded-full transition-all duration-300 font-sans ${locale === 'mr' ? 'bg-primary text-white font-bold' : 'text-foreground hover:bg-secondary/20'}`}
+        onClick={() => setLanguage('mr')}
+        className={`px-4 flex items-center text-[10px] font-black uppercase tracking-widest rounded-full transition-all duration-500 ${
+          language === 'mr' 
+            ? 'bg-[#C2410C] text-[#FFF7E6] shadow-[0_0_15px_rgba(194,65,12,0.4)]' 
+            : 'text-parchment/60 hover:text-primary hover:bg-white/5'
+        }`}
       >
-        🇮🇳 मराठी
+        मराठी
       </button>
     </div>
   );

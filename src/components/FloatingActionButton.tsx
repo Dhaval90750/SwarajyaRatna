@@ -53,12 +53,13 @@ export default function FloatingActionButton() {
       {/* Main Toggle Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-16 h-16 rounded-full flex items-center justify-center shadow-[0_10px_40px_rgba(255,153,51,0.4)] transition-all duration-500 ${isOpen ? 'bg-secondary rotate-45' : 'bg-primary hover:scale-110'}`}
+        style={{ transform: isOpen ? 'rotate(45deg)' : '' }}
+        className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-[1.08] ${isOpen ? 'bg-[#9A3412] border-2 border-[#D4AF37]/50 shadow-xl' : 'bg-[#C2410C] border-2 border-[#D4AF37] shadow-[0_4px_15px_rgba(0,0,0,0.4)]'}`}
       >
         <div className="relative w-8 h-8 flex items-center justify-center">
-             <span className={`absolute w-8 h-1 bg-white rounded-full transition-all ${isOpen ? 'rotate-90' : 'translate-y-[-8px]'}`}></span>
-             <span className="absolute w-8 h-1 bg-white rounded-full"></span>
-             <span className={`absolute w-8 h-1 bg-white rounded-full transition-all ${isOpen ? 'rotate-90' : 'translate-y-[8px]'}`}></span>
+             <span className={`absolute w-8 h-[3px] bg-white rounded-sm transition-all ${isOpen ? 'rotate-90' : 'translate-y-[-8px]'}`}></span>
+             <span className="absolute w-8 h-[3px] bg-white rounded-sm"></span>
+             <span className={`absolute w-8 h-[3px] bg-white rounded-sm transition-all ${isOpen ? 'rotate-90' : 'translate-y-[8px]'}`}></span>
         </div>
       </button>
     </div>

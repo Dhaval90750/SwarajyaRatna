@@ -76,7 +76,8 @@ export default function AdminDashboard() {
   const filteredData = data.filter(item => {
     const matchesFilter = filter === 'all' || item.interests === filter;
     const matchesSearch = item.fullName?.toLowerCase().includes(search.toLowerCase()) || 
-                          item.email?.toLowerCase().includes(search.toLowerCase());
+                          item.email?.toLowerCase().includes(search.toLowerCase()) ||
+                          item.mavala_id?.toLowerCase().includes(search.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
@@ -92,7 +93,7 @@ export default function AdminDashboard() {
             <Lock className="text-primary" size={32} />
           </div>
           <h1 className="text-3xl font-black text-primary font-devanagari mb-2">Admin Access</h1>
-          <p className="text-foreground/60 mb-8 font-medium italic">Swarajyacha Dhyas, Ratna cha Gaurav</p>
+          <p className="text-foreground/60 mb-8 font-medium italic">Swarajyacha Dhyas, Ratnancha Gaurav</p>
           
           <form onSubmit={handleLogin} className="space-y-6">
             <input 
@@ -149,7 +150,7 @@ export default function AdminDashboard() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/30" size={20} />
               <input 
                 type="text" 
-                placeholder="Search by name or email..."
+                placeholder="Search by name, email, or Mavala ID..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-12 pr-6 py-4 rounded-2xl border border-primary/5 bg-orange-50/20 focus:border-primary/30 outline-none transition-all font-medium"
@@ -192,28 +193,42 @@ export default function AdminDashboard() {
               key={item.id} 
               className="bg-white/70 backdrop-blur-md p-6 md:p-8 rounded-[2rem] border border-primary/10 shadow-md hover:shadow-xl hover:border-primary/30 transition-all flex flex-col lg:flex-row lg:items-center gap-8 group"
             >
-              <div className="flex items-center gap-6 lg:w-1/4">
-                 <div className="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center text-2xl font-black shadow-[0_5px_15px_rgba(255,153,51,0.3)]">
-                    {item.fullName?.charAt(0)}
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">{item.fullName}</h3>
-                    <p className="text-primary font-bold text-sm uppercase tracking-widest">{item.interests}</p>
+              <div className="flex items-center justify-between lg:w-1/4">
+                 <div className="flex items-center gap-6">
+                    <div className="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center text-2xl font-black shadow-[0_5px_15px_rgba(255,153,51,0.3)]">
+                        {item.fullName?.charAt(0)}
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">{item.fullName}</h3>
+                        <p className="text-primary font-bold text-sm uppercase tracking-widest">{item.interests}</p>
+                    </div>
                  </div>
               </div>
 
               <div className="grid grid-cols-2 lg:grid-cols-4 flex-grow gap-6 text-sm font-bold">
-                 <div className="flex items-center gap-3 text-foreground/70">
-                    <Mail size={16} className="text-primary" /> {item.email}
+                 <div className="flex flex-col gap-1">
+                    <span className="text-[10px] text-stone-400 uppercase tracking-widest">Identify</span>
+                    <div className="flex items-center gap-3 text-foreground/70">
+                        <Mail size={16} className="text-primary" /> {item.email}
+                    </div>
                  </div>
-                 <div className="flex items-center gap-3 text-foreground/70">
-                    <User size={16} className="text-primary" /> {item.age} yrs | {item.gender}
+                 <div className="flex flex-col gap-1">
+                    <span className="text-[10px] text-stone-400 uppercase tracking-widest">Details</span>
+                    <div className="flex items-center gap-3 text-foreground/70">
+                        <User size={16} className="text-primary" /> {item.age} yrs | {item.gender}
+                    </div>
                  </div>
-                 <div className="flex items-center gap-3 text-foreground/70">
-                    <MapPin size={16} className="text-primary" /> {item.city}
+                 <div className="flex flex-col gap-1">
+                    <span className="text-[10px] text-stone-400 uppercase tracking-widest">Mavala ID</span>
+                    <div className="px-3 py-1 bg-accent/10 border border-accent/20 rounded-lg w-fit">
+                        <span className="text-accent font-black tracking-widest text-xs">{item.mavala_id || 'PENDING'}</span>
+                    </div>
                  </div>
-                 <div className="flex items-center gap-3 text-foreground/70">
-                    <Calendar size={16} className="text-primary" /> {new Date(item.created_at).toLocaleDateString()}
+                 <div className="flex flex-col gap-1">
+                    <span className="text-[10px] text-stone-400 uppercase tracking-widest">Enrolled</span>
+                    <div className="flex items-center gap-3 text-foreground/70">
+                        <Calendar size={16} className="text-primary" /> {new Date(item.enrolled_at || item.created_at).toLocaleDateString()}
+                    </div>
                  </div>
               </div>
 

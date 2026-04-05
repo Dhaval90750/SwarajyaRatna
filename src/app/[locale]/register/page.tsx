@@ -1,21 +1,33 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { Button } from '@/components/ui/Button';
 import { submitRegistration } from '@/app/actions/forms';
 import { MotionDiv } from '@/components/animations/MotionElements';
 import MeherabDivider from '@/components/MeherabDivider';
+import GauravPatra from '@/components/GauravPatra';
 
 export default function RegisterPage() {
   const t = useTranslations('RegisterPage');
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [registrant, setRegistrant] = useState<{name: string, interest: string}>({name: "", interest: ""});
+  const [mavalaId, setMavalaId] = useState<string>("");
+  const [isPending, startTransition] = useTransition();
 
   async function actionHandler(formData: FormData) {
+    const name = formData.get('fullName') as string;
+    const interest = formData.get('interests') as string;
+    setRegistrant({ name, interest });
+    
     setStatus("loading");
     const res = await submitRegistration(formData);
-    if(res.success) setStatus("success");
-    else setStatus("error");
+    if(res.success) {
+      setMavalaId(res.mavalaId || "");
+      setStatus("success");
+    } else {
+      setStatus("error");
+    }
   }
 
   return (
@@ -28,23 +40,27 @@ export default function RegisterPage() {
             animate={{ opacity: 1, scale: 1 }}
           >
             <h1 className="text-4xl md:text-6xl font-black text-primary font-devanagari mb-4 leading-tight">
-              {t('pageHeading')}
+              {status === "success" ? "मावळा गौरव" : t('pageHeading')}
             </h1>
             <div className="h-1.5 w-24 bg-primary mx-auto rounded-full" />
           </MotionDiv>
         </div>
 
-        <div className="max-w-3xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-4">
           {status === "success" ? (
-            <MotionDiv 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white border-2 border-primary/20 text-center p-12 rounded-[3rem] shadow-2xl"
-            >
-              <span className="text-6xl mb-6 block">🚩</span>
-              <h2 className="text-3xl font-black text-primary font-devanagari mb-4">{t('success')}</h2>
-              <p className="text-lg text-foreground/70 font-medium">Swarajyacha Dhyas, Ratna cha Gaurav. Our team will contact you soon!</p>
-            </MotionDiv>
+             <div className="flex flex-col items-center">
+                <GauravPatra 
+                  name={registrant.name} 
+                  role={registrant.interest ? t(`interests.${registrant.interest}`) : "Swarajya Member"} 
+                  mavalaId={mavalaId}
+                  isStatic={true} 
+                />
+                <div className="mt-12 text-center">
+                   <Button onClick={() => window.location.href = '/'} variant="outline" className="h-14 px-12 border-primary text-primary font-bold rounded-full">
+                      {t('backToHome')}
+                   </Button>
+                </div>
+             </div>
           ) : (
             <MotionDiv
               initial={{ opacity: 0, y: 40 }}
@@ -125,4 +141,3 @@ export default function RegisterPage() {
     </main>
   );
 }
-

@@ -26,11 +26,23 @@ export default function ContactPage() {
         <div className="grid md:grid-cols-2 gap-12 bg-orange-50/50 border border-primary/20 p-8 rounded-3xl shadow-xl">
           <div>
             <h2 className="text-3xl font-black text-primary mb-6 font-devanagari">Get in Touch</h2>
-            <p className="text-foreground/80 font-sans mb-8 leading-relaxed">Reach out to us for collaborations, sponsorships, or any inquiries. Our team is always ready to connect.</p>
+            <p className="text-foreground/80 font-sans mb-8 leading-relaxed">
+              Reach out to us for collaborations, sponsorships, or any inquiries. Our team is always ready to connect. <strong className="text-primary italic block mt-2">We are ready to perform in your Cultural events!</strong>
+            </p>
             <div className="space-y-6">
+               <div className="bg-secondary/5 p-4 rounded-xl border">
+                 <span className="font-bold font-sans text-primary block mb-1">Email</span>
+                 <a href="mailto:swarajyaratna@gmail.com" className="block text-foreground hover:text-primary transition-colors font-medium">swarajyaratna@gmail.com</a>
+               </div>
+               
                <div className="bg-secondary/5 p-4 rounded-xl border">
                  <span className="font-bold font-sans text-primary block mb-1">YouTube</span>
                  <a href="https://www.youtube.com/@SwarajyaRatna" target="_blank" rel="noopener noreferrer" className="block text-foreground hover:text-primary transition-colors font-medium">@SwarajyaRatna</a>
+               </div>
+
+               <div className="bg-secondary/5 p-4 rounded-xl border">
+                 <span className="font-bold font-sans text-primary block mb-1">Instagram</span>
+                 <a href="https://www.instagram.com/swarjyaratna" target="_blank" rel="noopener noreferrer" className="block text-foreground hover:text-primary transition-colors font-medium">@swarjyaratna</a>
                </div>
                
                {/* Embed Static Image for Location */}

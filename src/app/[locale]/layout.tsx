@@ -8,8 +8,9 @@ import '../globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingActionButton from '@/components/FloatingActionButton';
-import CustomCursor from '@/components/CustomCursor';
 import LoadingScreen from '@/components/LoadingScreen';
+import { SoundProvider } from '@/context/SoundContext';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 const eczar = Eczar({
   subsets: ['devanagari', 'latin'],
@@ -50,10 +51,10 @@ export const metadata: Metadata = {
     template: '%s | SwarajyaRatna',
     default: 'SwarajyaRatna - Cultural Movement',
   },
-  description: 'Swarajyacha Dhyas, Ratna cha Gaurav. A premier youth-driven cultural movement in Maharashtra promoting Maratha history, arts, and community engagement.',
+  description: 'Swarajyacha Dhyas, Ratnancha Gaurav. A premier youth-driven cultural movement in Maharashtra promoting Maratha history, arts, and community engagement.',
   openGraph: {
     title: 'SwarajyaRatna - Cultural Movement',
-    description: 'Swarajyacha Dhyas, Ratna cha Gaurav. Joining generations through Marathi culture and heritage.',
+    description: 'Swarajyacha Dhyas, Ratnancha Gaurav. Joining generations through Marathi culture and heritage.',
     url: 'https://github.com/Dhaval90750/SwarajyaRatna',
     siteName: 'SwarajyaRatna',
     locale: 'mr_IN',
@@ -90,12 +91,17 @@ export default async function LocaleLayout(
     <html lang={locale} className={`${eczar.variable} ${gotu.variable} ${kalam.variable} ${yatraOne.variable} ${tiroDevanagari.variable}`} suppressHydrationWarning>
       <body className="antialiased min-h-screen flex flex-col font-sans overflow-x-hidden p-0 m-0">
         <NextIntlClientProvider messages={messages}>
-          <LoadingScreen />
-          <CustomCursor />
-          <Navbar />
-          {props.children}
-          <Footer />
-          <FloatingActionButton />
+          <LanguageProvider>
+            <SoundProvider>
+              <LoadingScreen />
+              <Navbar />
+              <div className="flex-grow pt-16">
+                {props.children}
+              </div>
+              <Footer />
+              <FloatingActionButton />
+            </SoundProvider>
+          </LanguageProvider>
         </NextIntlClientProvider>
       </body>
     </html>

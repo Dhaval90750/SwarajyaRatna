@@ -1,6 +1,6 @@
 # SwarajyaRatna Platform 🚩
 
-Swarajyacha Dhyas, Ratna cha Gaurav. A premier youth-driven cultural movement in Maharashtra promoting Maratha history, arts, drama, and digital community engagement.
+Swarajyacha Dhyas, Ratnancha Gaurav. A premier youth-driven cultural movement in Maharashtra promoting Maratha history, arts, drama, and digital community engagement.
 
 ## Features (V2 Release)
 
