@@ -42,7 +42,7 @@ export default function ContactPage() {
 
                <div className="bg-secondary/5 p-4 rounded-xl border">
                  <span className="font-bold font-sans text-primary block mb-1">Instagram</span>
-                 <a href="https://www.instagram.com/swarjyaratna" target="_blank" rel="noopener noreferrer" className="block text-foreground hover:text-primary transition-colors font-medium">@swarjyaratna</a>
+                 <a href="https://www.instagram.com/swarajyaratna" target="_blank" rel="noopener noreferrer" className="block text-foreground hover:text-primary transition-colors font-medium">@swarajyaratna</a>
                </div>
                
                {/* Embed Static Image for Location */}

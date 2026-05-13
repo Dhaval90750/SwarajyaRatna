@@ -16,6 +16,8 @@ import StoneEtchedText from '@/components/animations/StoneEtchedText';
 import ShieldButton from '@/components/ShieldButton';
 import TimelineMilestone from '@/components/TimelineMilestone';
 import { useSound } from '@/context/SoundContext';
+import { VideoCarousel } from '@/components/VideoCarousel';
+import Image from 'next/image';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
@@ -180,7 +182,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Video Content */}
+      {/* Video Content Carousel */}
       <section className="py-12 px-4 bg-background relative overflow-hidden">
         {/* Separation Divider (Animated) */}
         <motion.div 
@@ -200,9 +202,67 @@ export default function HomePage() {
             </Link>
           </div>
           
+          <VideoCarousel 
+            videos={[
+              { videoId: "zQNw2fy8xZw", title: "अजिंक्य | Ajinkya - Marathi Historical Drama by SwarajyaRatna" },
+              { videoId: "3LAGVXC5R3E", title: "When History Spoke, the Crowd Roared | Swarajya Ratna's Drama" },
+              { videoId: "IPS9QY4RqVI", title: "|| छाव्याचा अग्निदिव्य || Act by SwarajyaRatna Team and NSS TCOER" },
+              { videoId: "lcOQD_0EP6I", title: "'Raja ShivChhatrapati' act played by NSS, TCOER and SwarajyaRatna" }
+            ]} 
+          />
+        </div>
+      </section>
+
+      {/* Behind the Scenes / Vlogs */}
+      <section className="py-12 px-4 bg-stone-50/50 border-t border-stone-200/40">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-4">{t('btsHeading')}</h2>
+            <div className="h-1 w-24 bg-primary rounded-full"></div>
+          </div>
+          
           <div className="grid md:grid-cols-2 gap-8">
-            <VideoCard videoId="IPS9QY4RqVI" title="|| छाव्याचा अग्निदिव्य || - Act by SwarajyaRatna Team" />
-            <VideoCard videoId="lcOQD_0EP6I" title="'Raja ShivChhatrapati' - Epic Act by SwarajyaRatna" />
+            <VideoCard videoId="kX9j7gCPX7E" title="Swarajya Ratna 2K24 || Behind The Scenes PT.1" />
+            <VideoCard videoId="fX4NHU_VnWE" title="Swarajya Ratna 2K24 || Behind The Scenes PT.2" />
+          </div>
+        </div>
+      </section>
+
+      {/* Cultural Education Spotlight */}
+      <section className="py-20 px-4 bg-white border-t border-primary/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-12 items-center">
+            <div className="lg:w-1/2">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-4">{t('eduHeading')}</h2>
+              <h3 className="text-xl font-bold text-stone-500 uppercase tracking-widest mb-6">{t('eduSubHeading')}</h3>
+              <div className="h-1.5 w-24 bg-primary rounded-full mb-8"></div>
+              <p className="text-lg md:text-xl text-foreground/80 leading-relaxed font-info font-bold">
+                {t('eduText')}
+              </p>
+            </div>
+            <div className="lg:w-1/2 grid grid-cols-3 gap-2 rounded-[2rem] overflow-hidden shadow-2xl border-8 border-stone-100">
+              {[
+                "WhatsApp Image 2026-05-12 at 4.16.09 PM (1).jpeg",
+                "WhatsApp Image 2026-05-12 at 4.16.09 PM.jpeg",
+                "WhatsApp Image 2026-05-12 at 4.16.10 PM.jpeg",
+                "WhatsApp Image 2026-05-12 at 4.16.11 PM (1).jpeg",
+                "WhatsApp Image 2026-05-12 at 4.16.11 PM.jpeg",
+                "WhatsApp Image 2026-05-12 at 4.16.12 PM (1).jpeg",
+                "WhatsApp Image 2026-05-12 at 4.16.12 PM (2).jpeg",
+                "WhatsApp Image 2026-05-12 at 4.16.12 PM.jpeg",
+                "WhatsApp Image 2026-05-12 at 4.16.13 PM.jpeg"
+              ].map((name, idx) => (
+                <div key={idx} className="relative aspect-square group overflow-hidden">
+                  <Image 
+                    src={`/images/${name}`} 
+                    alt={`Education Event ${idx + 1}`} 
+                    fill 
+                    className="object-cover group-hover:scale-110 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

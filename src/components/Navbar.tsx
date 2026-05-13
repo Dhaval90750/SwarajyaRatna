@@ -50,30 +50,6 @@ export default function Navbar() {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
-        <div className="relative group/ambience">
-          <button 
-            onClick={toggleMute}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border-2 duration-500 group shadow-md ${
-              !isMuted 
-                ? "bg-white border-[#C2410C] text-[#C2410C] shadow-[0_0_15px_rgba(194,65,12,0.3)]" 
-                : "bg-white border-stone-200 text-stone-400 hover:border-stone-300"
-            }`}
-          >
-            {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} className="animate-pulse" />}
-            <span className="hidden sm:inline text-[10px] font-black uppercase tracking-[0.2em]">Ambience</span>
-            {!isMuted && <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping" />}
-          </button>
-          
-          {/* Concept Tooltip Badge */}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-48 p-3 bg-stone-800 border border-[#D4AF37]/20 text-xs text-white rounded-xl opacity-0 group-hover/ambience:opacity-100 transition-opacity pointer-events-none shadow-2xl z-[101]">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full border-8 border-transparent border-bottom-[#3B2F2F]" />
-            <p className="font-devanagari font-bold text-center border-b border-[#D4AF37]/20 pb-1 mb-1 text-orange-200">किल्ल्याचा अनुभव</p>
-            <p className="font-sans text-[9px] text-center opacity-80 uppercase tracking-widest leading-relaxed">
-              Experience the echoes of history with authentic fort sounds & folk music.
-            </p>
-          </div>
-        </div>
-
         <div className="hidden md:block">
           <LanguageToggle />
         </div>
