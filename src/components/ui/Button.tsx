@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, forwardRef } from 'react';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'icon';
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -20,6 +20,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       sm: 'h-9 px-4 text-sm',
       md: 'h-11 px-8 text-base shadow-md hover:shadow-lg',
       lg: 'h-14 px-10 text-lg shadow-md hover:shadow-lg transition-shadow',
+      icon: 'h-10 w-10 p-0',
     };
 
     return (
