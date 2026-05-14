@@ -7,6 +7,7 @@ import { teamMembers, TeamMember } from '@/data/team';
 import RoyalTeamCard from '@/components/RoyalTeamCard';
 import GauravPatra from '@/components/GauravPatra';
 import { useState } from 'react';
+import { IMAGES } from '@/data/assets';
 
 export default function AboutPage() {
   const t = useTranslations('AboutPage');
@@ -18,7 +19,7 @@ export default function AboutPage() {
       
       {/* Hero Section */}
       <section className="relative py-24 px-4 bg-orange-50/20 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/hero-light.png')] bg-cover bg-center opacity-5 blur-[4px]" />
+        <div className="absolute inset-0 bg-[url('/images/hero-light.png')] bg-cover bg-center opacity-5 blur-[4px]" style={{ backgroundImage: `url(${IMAGES.backgrounds.light})` }} />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <MotionDiv 
             initial={{ opacity: 0, y: 30 }}
@@ -57,7 +58,7 @@ export default function AboutPage() {
             </MotionDiv>
             <div className="md:w-1/2 relative group">
                <div className="aspect-video bg-primary/5 rounded-[3rem] border border-primary/20 flex flex-col items-center justify-center relative overflow-hidden shadow-2xl group-hover:shadow-[0_0_40px_rgba(194,65,12,0.3)] transition-all duration-500">
-                  <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: `url(${IMAGES.backgrounds.hero})` }} />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-stone-900/40 to-transparent" />
                   <div className="relative z-10 flex flex-col items-center p-8 text-center mt-auto w-full">
                     <span className="text-[#D4AF37] text-4xl mb-2 drop-shadow-md">⚔️</span>
@@ -118,7 +119,7 @@ export default function AboutPage() {
 
       {/* Royal Archive: Team Section */}
       <section className="py-32 px-4 bg-orange-50/20 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 bg-[url('/images/hero-light.png')] bg-cover mix-blend-multiply grayscale" />
+        <div className="absolute inset-0 opacity-5 bg-[url('/images/hero-light.png')] bg-cover mix-blend-multiply grayscale" style={{ backgroundImage: `url(${IMAGES.backgrounds.light})` }} />
         
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">

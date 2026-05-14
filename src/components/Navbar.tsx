@@ -7,6 +7,7 @@ import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import LanguageToggle from './LanguageToggle';
 import { useSound } from '@/context/SoundContext';
 import Image from 'next/image';
+import { IMAGES } from '@/data/assets';
 
 export default function Navbar() {
   const t = useTranslations('Navigation');
@@ -28,7 +29,7 @@ export default function Navbar() {
       <Link href="/" className="flex items-center gap-[10px] pl-4 text-xl md:text-3xl font-extrabold font-devanagari group whitespace-nowrap">
         <div className="relative w-10 h-10 shadow-lg border border-[#D4AF37]/30 rounded-lg overflow-hidden bg-stone-900/10 p-1">
           <Image 
-            src="/images/logo-transparent.png" 
+            src={IMAGES.logo.transparent} 
             alt="SwarajyaRatna Logo" 
             fill 
             className="object-contain drop-shadow-[0_0_8px_rgba(194,65,12,0.3)] group-hover:scale-110 transition-transform duration-500" 

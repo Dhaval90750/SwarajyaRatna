@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { TeamMember } from '@/data/team';
 import { useLocale } from 'next-intl';
 import { Linkedin } from 'lucide-react';
+import { IMAGES } from '@/data/assets';
 
 interface RoyalTeamCardProps {
   member: TeamMember;
@@ -28,15 +29,15 @@ export default function RoyalTeamCard({ member, onClick }: RoyalTeamCardProps) {
       onClick={onClick}
       whileHover={{ y: -4, scale: 1.01 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="group relative bg-[#FFF7E6] p-4 rounded-2xl cursor-pointer overflow-hidden transition-all animate-in fade-in zoom-in duration-500 shadow-[0_10px_40px_rgba(0,0,0,0.1)] will-change-transform [-webkit-backface-visibility:hidden] [backface-visibility:hidden] [transform:translateZ(0)]"
+      className="group relative bg-[#FFF7E6] p-4 rounded-2xl cursor-pointer overflow-hidden transition-all animate-in fade-in zoom-in duration-500 shadow-[0_10px_40px_rgba(0,0,0,0.1)] will-change-transform [-webkit-backface-visibility:hidden] [backface-visibility:hidden] [transform:translateZ(0)] h-full flex flex-col"
     >
       {/* Texture Overlay */}
-      <div className="absolute inset-0 opacity-[0.1] pointer-events-none bg-[url('/images/hero-light.png')] mix-blend-multiply grayscale bg-cover" />
+      <div className="absolute inset-0 opacity-[0.1] pointer-events-none bg-[url('/images/hero-light.png')] mix-blend-multiply grayscale bg-cover" style={{ backgroundImage: `url(${IMAGES.backgrounds.light})` }} />
       
       {/* Official Logo Seal */}
       <div className="absolute top-4 right-4 w-10 h-10 bg-white/95 rounded-full flex items-center justify-center border-2 border-accent/40 shadow-[0_0_15px_rgba(212,175,55,0.4)] z-20 group-hover:scale-110 transition-transform p-1">
         <Image 
-          src="/images/logo-transparent.png" 
+          src={IMAGES.logo.transparent} 
           alt="SwarajyaRatna" 
           width={32} 
           height={32} 
@@ -50,6 +51,7 @@ export default function RoyalTeamCard({ member, onClick }: RoyalTeamCardProps) {
           src={member.image}
           alt={member.nameEn}
           fill
+          sizes="(max-width: 768px) 100vw, 320px"
           priority
           unoptimized
           className="object-cover contrast-[1.05] brightness-[1.1] transition-all duration-700 ease-in-out"
@@ -58,7 +60,7 @@ export default function RoyalTeamCard({ member, onClick }: RoyalTeamCardProps) {
       </div>
 
       {/* Member Info */}
-      <div className="relative z-10 space-y-1">
+      <div className="relative z-10 space-y-1 flex-grow">
         <h3 className="text-xl md:text-2xl font-black text-[#C2410C] font-devanagari tracking-wider drop-shadow-sm leading-tight">
           {isMarathi ? member.name : member.nameEn}
         </h3>
@@ -76,7 +78,6 @@ export default function RoyalTeamCard({ member, onClick }: RoyalTeamCardProps) {
 
       {/* Decorative Divider & Social */}
       <div className="mt-5 pt-4 border-t border-[#3B2F2F]/10 flex items-center justify-between relative z-20">
-        <span className="text-[#D4AF37] text-[10px] font-black uppercase tracking-widest">Archive Record</span>
         
         {member.linkedin ? (
           <button 

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { Linkedin, X } from 'lucide-react';
 import { useSound } from '@/context/SoundContext';
 import { useEffect, useRef } from 'react';
-import html2canvas from 'html2canvas';
+import { IMAGES } from '@/data/assets';
 
 interface GauravPatraProps {
   member?: TeamMember | null;
@@ -26,33 +26,11 @@ export default function GauravPatra({ member, name, role, mavalaId, onClose, isS
   const displayName = member ? (isMarathi ? member.name : member.nameEn) : name;
   const displayRole = member ? (isMarathi ? member.role : member.roleEn) : role;
   const displayHonor = member ? (isMarathi ? member.honorText : member.honorTextEn) : null;
-  const displayImage = member ? member.image : "/images/logo-transparent.png";
+  const displayImage = member ? member.image : IMAGES.logo.transparent;
   const displaySubName = member ? (isMarathi ? member.nameEn : member.name) : (mavalaId ? "Swarajya Mavala" : null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const downloadCertificate = async () => {
-    if (scrollRef.current) {
-      // Small delay to ensure all assets are rendered
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      const canvas = await html2canvas(scrollRef.current, {
-        scale: 4, // 4K quality for printing
-        useCORS: true,
-        backgroundColor: '#FFF7E6',
-        logging: false,
-        onclone: (clonedDoc) => {
-          // Adjust any elements on clone if needed
-        }
-      });
-      
-      const link = document.createElement('a');
-      link.download = `SwarajyaRatna_Proclamation_${displayName?.replace(/\s+/g, '_')}.png`;
-      link.href = canvas.toDataURL('image/png', 1.0);
-      link.click();
-      
-      if (playSound) playSound('seal-break');
-    }
-  };
+
 
   // Handle ESC key to close
   useEffect(() => {
@@ -92,7 +70,7 @@ export default function GauravPatra({ member, name, role, mavalaId, onClose, isS
             transition={{ type: "spring", stiffness: 200, damping: 25 }}
           >
             {/* Texture Overlay */}
-            <div className="absolute inset-0 opacity-[0.12] pointer-events-none bg-[url('/images/hero-light.png')] mix-blend-multiply grayscale bg-cover" />
+            <div className="absolute inset-0 opacity-[0.12] pointer-events-none bg-[url('/images/hero-light.png')] mix-blend-multiply grayscale bg-cover" style={{ backgroundImage: `url(${IMAGES.backgrounds.light})` }} />
             
             {/* Modal Exit Button */}
             {!isStatic && (
@@ -139,7 +117,7 @@ export default function GauravPatra({ member, name, role, mavalaId, onClose, isS
                     className="object-cover contrast-[1.05] brightness-[1.05] scale-110"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "/images/logo-transparent.png";
+                      target.src = IMAGES.logo.transparent;
                       target.className = "p-4 object-contain opacity-50";
                     }}
                   />
@@ -199,21 +177,6 @@ export default function GauravPatra({ member, name, role, mavalaId, onClose, isS
                   </div>
                 )}
               </motion.div>
-
-              {/* Download CTA - Pro-Badge Style */}
-              <div className="mb-12 no-download-exclude" data-html2canvas-ignore="true">
-                <button 
-                  onClick={downloadCertificate}
-                  className="group relative px-10 py-5 bg-gradient-to-br from-accent to-primary rounded-2xl text-white font-black uppercase tracking-[0.3em] shadow-[0_15px_40px_rgba(194,65,12,0.3)] hover:shadow-[0_20px_50px_rgba(194,65,12,0.5)] transition-all transform hover:-translate-y-1 active:scale-95"
-                >
-                  <span className="relative z-10 flex items-center gap-3">
-                    <span className="text-xl">📜</span> SAVE PROCLAMATION
-                  </span>
-                  <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
-                </button>
-                <p className="mt-4 text-[10px] font-bold text-stone-400 uppercase tracking-widest animate-pulse">Ready for Sharing</p>
-              </div>
-
               {/* Verified Archive Footer - Restored Identity Links */}
               <div className="w-full flex flex-col items-center border-t border-stone-200 pt-8 mt-4 gap-4">
                 {member?.linkedin && member.linkedin !== '#' ? (
@@ -237,10 +200,10 @@ export default function GauravPatra({ member, name, role, mavalaId, onClose, isS
                 ) : (
                   <div className="flex flex-col items-center gap-3">
                     <div className="w-14 h-14 bg-white/50 rounded-full flex items-center justify-center p-3 border border-primary/10 shadow-inner opacity-30">
-                       <Image src="/images/logo-transparent.png" alt="Seal" width={100} height={100} className="object-contain grayscale contrast-[2]" />
+                       <Image src={IMAGES.logo.transparent} alt="Seal" width={100} height={100} className="object-contain grayscale contrast-[2]" />
                     </div>
                     <div className="text-center">
-                      <span className="block text-[8px] font-black uppercase tracking-[0.4em] text-stone-300 italic">Official Swarajya Archive</span>
+                      <span className="block text-[8px] font-black uppercase tracking-[0.4em] text-stone-300 italic">Historical Proclamation</span>
                       <div className="flex items-center justify-center gap-2 mt-1">
                         <div className="h-[1px] w-4 bg-stone-200" />
                         <span className="block text-[10px] font-black uppercase tracking-widest text-primary/30">Verified Identity</span>

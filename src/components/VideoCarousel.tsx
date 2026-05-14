@@ -1,10 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { VideoCard } from './VideoCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from './ui/Button';
 
 interface Video {
   videoId: string;
@@ -12,106 +10,102 @@ interface Video {
 }
 
 export function VideoCarousel({ videos }: { videos: Video[] }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  
+  // Triple the videos for infinite effect
+  const extendedVideos = [...videos, ...videos, ...videos];
+  const initialOffset = videos.length;
 
-  const nextVideo = () => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % videos.length);
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      const itemWidth = scrollWidth / extendedVideos.length;
+      
+      // Infinite scroll logic: jump back to middle set if reaching ends
+      if (scrollLeft < itemWidth * (initialOffset - 1)) {
+        scrollRef.current.scrollLeft = scrollLeft + itemWidth * videos.length;
+      } else if (scrollLeft > itemWidth * (initialOffset + videos.length + 1)) {
+        scrollRef.current.scrollLeft = scrollLeft - itemWidth * videos.length;
+      }
+
+      // Update active index for pagination (relative to original videos)
+      const currentRelativeIndex = Math.round(scrollLeft / itemWidth) % videos.length;
+      setActiveIndex(currentRelativeIndex);
+    }
   };
 
-  const prevVideo = () => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + videos.length) % videos.length);
-  };
+  useEffect(() => {
+    if (scrollRef.current) {
+      const { scrollWidth } = scrollRef.current;
+      const itemWidth = scrollWidth / extendedVideos.length;
+      // Start in the middle set
+      scrollRef.current.scrollLeft = itemWidth * initialOffset;
+    }
+  }, []);
 
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-      scale: 0.9,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-      scale: 0.9,
-    }),
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const itemWidth = scrollRef.current.querySelector('div')?.clientWidth || 0;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -itemWidth : itemWidth,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto px-4 py-8">
-      <div className="relative aspect-video overflow-hidden rounded-3xl shadow-2xl border border-primary/20">
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={currentIndex}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-            }}
-            className="absolute inset-0"
-          >
-            <VideoCard 
-              videoId={videos[currentIndex].videoId} 
-              title={videos[currentIndex].title} 
-            />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Navigation Buttons */}
-        <div className="absolute inset-0 flex items-center justify-between p-4 z-20 pointer-events-none">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={prevVideo}
-            className="pointer-events-auto bg-white/20 backdrop-blur-md hover:bg-white/40 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all border border-white/30"
-          >
-            <ChevronLeft size={32} />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={nextVideo}
-            className="pointer-events-auto bg-white/20 backdrop-blur-md hover:bg-white/40 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all border border-white/30"
-          >
-            <ChevronRight size={32} />
-          </Button>
-        </div>
+    <div className="relative w-full py-12 group">
+      {/* Navigation Buttons */}
+      <div className="absolute top-[45%] -translate-y-1/2 left-4 right-4 flex justify-between z-40 pointer-events-none">
+        <button
+          onClick={() => scroll('left')}
+          className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 shadow-xl flex items-center justify-center text-primary transition-all hover:bg-primary hover:text-white hover:scale-110 active:scale-95 border border-primary/10"
+        >
+          <ChevronLeft size={32} strokeWidth={2.5} />
+        </button>
+        <button
+          onClick={() => scroll('right')}
+          className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 shadow-xl flex items-center justify-center text-primary transition-all hover:bg-primary hover:text-white hover:scale-110 active:scale-95 border border-primary/10"
+        >
+          <ChevronRight size={32} strokeWidth={2.5} />
+        </button>
       </div>
 
-      {/* Dots Indicator */}
+      {/* Scrollable Container */}
+      <div 
+        ref={scrollRef}
+        onScroll={checkScroll}
+        className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide py-10"
+      >
+        {extendedVideos.map((video, index) => (
+          <div 
+            key={`${video.videoId}-${index}`} 
+            className="flex-shrink-0 w-full md:w-1/2 snap-center px-4 flex justify-center"
+          >
+             <div className="w-full aspect-video relative group/card transition-all duration-500">
+                <div className="absolute inset-0 bg-primary/10 blur-[60px] rounded-full opacity-0 group-hover/card:opacity-30 -z-10 transition-opacity" />
+                <div className="h-full w-full">
+                  <VideoCard videoId={video.videoId} title={video.title} />
+                </div>
+             </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Edge Fades for Blending */}
+      <div className="absolute top-0 left-0 h-full w-12 md:w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+      <div className="absolute top-0 right-0 h-full w-12 md:w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+
+      {/* Pagination Indicators (Original count) */}
       <div className="flex justify-center gap-3 mt-8">
-        {videos.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              setDirection(index > currentIndex ? 1 : -1);
-              setCurrentIndex(index);
-            }}
-            className={`h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex 
-                ? "w-10 bg-primary shadow-[0_0_10px_rgba(194,65,12,0.5)]" 
-                : "w-3 bg-primary/20 hover:bg-primary/40"
-            }`}
+        {videos.map((_, i) => (
+          <div 
+            key={i} 
+            className={`h-1.5 transition-all duration-300 rounded-full ${i === activeIndex ? 'w-16 bg-primary' : 'w-8 bg-primary/20'}`}
           />
         ))}
       </div>
-      
-      {/* Mobile Swipe Hint */}
-      <p className="text-center text-stone-400 text-xs mt-4 uppercase tracking-[0.2em] font-bold md:hidden">
-        Swipe or use arrows to explore
-      </p>
     </div>
   );
 }

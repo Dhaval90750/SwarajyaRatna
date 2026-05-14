@@ -18,11 +18,16 @@ import TimelineMilestone from '@/components/TimelineMilestone';
 import { useSound } from '@/context/SoundContext';
 import { VideoCarousel } from '@/components/VideoCarousel';
 import Image from 'next/image';
+import { IMAGES } from '@/data/assets';
+import { useState } from 'react';
+import GalleryModal from '@/components/GalleryModal';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
   const scrollRef = useRef(null);
   const { playSound } = useSound();
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState<number | null>(null);
+  const [activeGlimpseIndex, setActiveGlimpseIndex] = useState<number | null>(null);
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start end", "end start"]
@@ -57,7 +62,7 @@ export default function HomePage() {
       <section className="relative w-full min-h-[85vh] md:h-screen flex items-center justify-center overflow-hidden bg-white max-w-full">
         {/* Subtle Solar Radial Gradient Backdrop */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#ffffff_20%,_#FFF7E6_60%,_rgba(255,153,51,0.1)_100%)] z-0" />
-        <div className="absolute inset-0 bg-[url('/images/hero-light.png')] opacity-10 bg-cover bg-center mix-blend-multiply z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-[url('/images/hero-light.png')] opacity-10 bg-cover bg-center mix-blend-multiply z-0 pointer-events-none" style={{ backgroundImage: `url(${IMAGES.backgrounds.light})` }} />
         
         {/* Layer 2: Main Proclamation Content */}
         <div className="relative z-10 w-full max-w-5xl px-6 flex flex-col items-center text-center">
@@ -103,12 +108,13 @@ export default function HomePage() {
         animate={{ backgroundPositionX: ["0px", "1000px"] }}
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         className="w-full h-10 bg-[url('/images/fort-wall-pattern.png')] bg-repeat-x bg-contain relative z-0 opacity-40 grayscale"
+        style={{ backgroundImage: `url(${IMAGES.backgrounds.pattern})` }}
       />
 
       {/* Section 2: The Campaign Trail (Timeline) */}
       <section ref={scrollRef} className="py-10 bg-[#FFF7E6] px-4 overflow-visible relative z-20">
         {/* Parchment Texture */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('/images/hero-light.png')] mix-blend-overlay grayscale bg-cover" />
+        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('/images/hero-light.png')] mix-blend-overlay grayscale bg-cover" style={{ backgroundImage: `url(${IMAGES.backgrounds.light})` }} />
         <div className="max-w-6xl mx-auto relative border-b border-stone-200/60 pb-10">
           <div className="text-center mb-8">
             <BilingualHeader 
@@ -183,15 +189,16 @@ export default function HomePage() {
       </section>
 
       {/* Video Content Carousel */}
-      <section className="py-12 px-4 bg-background relative overflow-hidden">
+      <section className="py-12 bg-background relative overflow-hidden">
         {/* Separation Divider (Animated) */}
         <motion.div 
           animate={{ backgroundPositionX: ["0px", "-1000px"] }}
           transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
           className="w-full h-8 bg-[url('/images/fort-wall-pattern.png')] bg-repeat-x bg-contain opacity-30 mb-20" 
+          style={{ backgroundImage: `url(${IMAGES.backgrounds.pattern})` }}
         />
         
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-6">
             <div>
               <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-4">{t('videosHeading')}</h2>
@@ -201,16 +208,16 @@ export default function HomePage() {
               <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white transition-colors">{t('videosMore')}</Button>
             </Link>
           </div>
-          
-          <VideoCarousel 
-            videos={[
-              { videoId: "zQNw2fy8xZw", title: "अजिंक्य | Ajinkya - Marathi Historical Drama by SwarajyaRatna" },
-              { videoId: "3LAGVXC5R3E", title: "When History Spoke, the Crowd Roared | Swarajya Ratna's Drama" },
-              { videoId: "IPS9QY4RqVI", title: "|| छाव्याचा अग्निदिव्य || Act by SwarajyaRatna Team and NSS TCOER" },
-              { videoId: "lcOQD_0EP6I", title: "'Raja ShivChhatrapati' act played by NSS, TCOER and SwarajyaRatna" }
-            ]} 
-          />
         </div>
+        
+        <VideoCarousel 
+          videos={[
+            { videoId: "zQNw2fy8xZw", title: "अजिंक्य | Ajinkya - Marathi Historical Drama by SwarajyaRatna" },
+            { videoId: "3LAGVXC5R3E", title: "When History Spoke, the Crowd Roared | Swarajya Ratna's Drama" },
+            { videoId: "IPS9QY4RqVI", title: "|| छाव्याचा अग्निदिव्य || Act by SwarajyaRatna Team and NSS TCOER" },
+            { videoId: "lcOQD_0EP6I", title: "'Raja ShivChhatrapati' act played by NSS, TCOER and SwarajyaRatna" }
+          ]} 
+        />
       </section>
 
       {/* Behind the Scenes / Vlogs */}
@@ -240,29 +247,61 @@ export default function HomePage() {
                 {t('eduText')}
               </p>
             </div>
-            <div className="lg:w-1/2 grid grid-cols-3 gap-2 rounded-[2rem] overflow-hidden shadow-2xl border-8 border-stone-100">
-              {[
-                "WhatsApp Image 2026-05-12 at 4.16.09 PM (1).jpeg",
-                "WhatsApp Image 2026-05-12 at 4.16.09 PM.jpeg",
-                "WhatsApp Image 2026-05-12 at 4.16.10 PM.jpeg",
-                "WhatsApp Image 2026-05-12 at 4.16.11 PM (1).jpeg",
-                "WhatsApp Image 2026-05-12 at 4.16.11 PM.jpeg",
-                "WhatsApp Image 2026-05-12 at 4.16.12 PM (1).jpeg",
-                "WhatsApp Image 2026-05-12 at 4.16.12 PM (2).jpeg",
-                "WhatsApp Image 2026-05-12 at 4.16.12 PM.jpeg",
-                "WhatsApp Image 2026-05-12 at 4.16.13 PM.jpeg"
-              ].map((name, idx) => (
-                <div key={idx} className="relative aspect-square group overflow-hidden">
+            <div className="lg:w-1/2 grid grid-cols-3 gap-2 rounded-[2rem] overflow-hidden shadow-2xl cursor-zoom-in">
+              {IMAGES.events.map((src, idx) => (
+                <div 
+                  key={idx} 
+                  className="relative aspect-square group overflow-hidden"
+                  onClick={() => setActiveGalleryIndex(idx)}
+                >
                   <Image 
-                    src={`/images/${name}`} 
+                    src={src} 
                     alt={`Education Event ${idx + 1}`} 
                     fill 
+                    sizes="(max-width: 1024px) 33vw, 16vw"
                     className="object-cover group-hover:scale-110 transition-transform duration-500" 
                   />
                   <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Event Glimpses Section */}
+      <section className="py-20 px-4 bg-stone-50/50 border-t border-primary/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-primary font-devanagari mb-4">{t('glimpsesHeading')}</h2>
+            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full"></div>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {IMAGES.glimpses.map((src, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: (idx % 6) * 0.1 }}
+                className="relative aspect-square rounded-2xl overflow-hidden cursor-zoom-in group shadow-lg"
+                onClick={() => setActiveGlimpseIndex(idx)}
+              >
+                <Image 
+                  src={src} 
+                  alt={`Glimpse ${idx + 1}`} 
+                  fill 
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 16vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white scale-0 group-hover:scale-100 transition-transform duration-300">
+                    <Theater size={20} />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -285,7 +324,7 @@ export default function HomePage() {
 
       {/* Call to Action */}
       <section className="py-24 px-4 text-center rounded-t-[3rem] shadow-2xl relative overflow-hidden mt-0 bg-orange-50 border-t border-primary/20">
-        <div className="absolute inset-0 bg-cover bg-center opacity-10 blur-[2px]" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }} />
+        <div className="absolute inset-0 bg-cover bg-center opacity-10 blur-[2px]" style={{ backgroundImage: `url(${IMAGES.backgrounds.hero})` }} />
         <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/50 to-transparent" />
         
         <div className="relative z-10 max-w-4xl mx-auto">
@@ -298,6 +337,16 @@ export default function HomePage() {
           <p className="mt-8 text-primary font-bold italic text-lg lg:text-xl opacity-90">{t('serviceTagline')}</p>
         </div>
       </section>
+
+      {/* Gallery Interaction Modal */}
+      <GalleryModal 
+        images={activeGlimpseIndex !== null ? [...IMAGES.glimpses] : [...IMAGES.events]} 
+        initialIndex={activeGlimpseIndex !== null ? activeGlimpseIndex : activeGalleryIndex} 
+        onClose={() => {
+          setActiveGalleryIndex(null);
+          setActiveGlimpseIndex(null);
+        }} 
+      />
     </main>
   );
 }
