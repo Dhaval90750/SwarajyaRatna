@@ -3,7 +3,7 @@ export const IMAGES = {
   team: {
     ninad: "/images/ninad.jpeg",
     sahil: "/images/sahil.jpeg",
-    tambe: "/images/tambe-royal.png",
+    tambe: "/images/tambe.jpeg",
     dhaval: "/images/dhaval.jpeg",
     shivpuje: "/images/shivpuje.jpeg",
     chikane: "/images/chikane.jpeg",
