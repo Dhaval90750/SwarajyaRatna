@@ -59,16 +59,16 @@ export default function HomePage() {
   return (
     <main className="flex-grow flex flex-col w-full overflow-x-hidden pt-0">
       {/* Section 1: The Grand Gateway (Sunlit Proclamation) */}
-      <section className="relative w-full min-h-[85vh] md:h-screen flex items-center justify-center overflow-hidden bg-white max-w-full">
+      <section className="relative w-full min-h-[90vh] md:h-screen flex items-center justify-center overflow-hidden bg-white max-w-full pt-16 md:pt-0">
         {/* Subtle Solar Radial Gradient Backdrop */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#ffffff_20%,_#FFF7E6_60%,_rgba(255,153,51,0.1)_100%)] z-0" />
         <div className="absolute inset-0 bg-[url('/images/hero-light.png')] opacity-10 bg-cover bg-center mix-blend-multiply z-0 pointer-events-none" style={{ backgroundImage: `url(${IMAGES.backgrounds.light})` }} />
         
         {/* Layer 2: Main Proclamation Content */}
-        <div className="relative z-10 w-full max-w-5xl px-6 flex flex-col items-center text-center">
+        <div className="relative z-10 w-full max-w-5xl px-4 md:px-6 flex flex-col items-center text-center">
           <StoneEtchedText 
             text="स्वराज्यरत्न" 
-            className="text-[clamp(64px,14vw,160px)] leading-[0.8] mb-8" 
+            className="text-[clamp(48px,16vw,160px)] leading-[0.8] mb-6 md:mb-8" 
           />
           
           <motion.div
@@ -78,25 +78,25 @@ export default function HomePage() {
             className="flex flex-col items-center w-full"
           >
             {/* Tagline */}
-            <div className="mb-10">
+            <div className="mb-8 md:mb-10">
               <BilingualHeader 
                 marathi="स्वराज्याचा ध्यास, रत्नांचा गौरव" 
                 english="Swarajyacha Dhyas, Ratnancha Gaurav"
                 className="text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.1)]"
               />
-              <div className="h-1 w-32 bg-primary mt-6 mx-auto rounded-full shadow-[0_2px_10px_rgba(194,65,12,0.3)]" />
+              <div className="h-1 w-24 md:w-32 bg-primary mt-4 md:mt-6 mx-auto rounded-full shadow-[0_2px_10px_rgba(194,65,12,0.3)]" />
             </div>
             
-            <p className="max-w-2xl text-lg md:text-2xl uppercase tracking-[0.3em] text-primary font-black mb-16 drop-shadow-sm font-yatra leading-relaxed opacity-90">
+            <p className="max-w-2xl text-base md:text-2xl uppercase tracking-[0.2em] md:tracking-[0.3em] text-primary font-black mb-10 md:mb-16 drop-shadow-sm font-yatra leading-relaxed opacity-90">
               {t('taglineSub')}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-8 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-8 w-full sm:w-auto px-4 sm:px-0">
               <Link href="/register">
-                <ShieldButton className="w-full sm:w-auto h-20 text-3xl px-12 bg-primary hover:bg-primary/90 text-white shadow-xl">{t('heroCtaJoin')}</ShieldButton>
+                <ShieldButton className="w-full sm:w-auto h-16 md:h-20 text-xl md:text-3xl px-8 md:px-12 bg-primary hover:bg-primary/90 text-white shadow-xl">{t('heroCtaJoin')}</ShieldButton>
               </Link>
               <Link href="https://www.youtube.com/@SwarajyaRatna" target="_blank">
-                <ShieldButton variant="outline" className="w-full sm:w-auto h-20 text-3xl px-12 border-primary/30 text-primary hover:bg-primary/5">{t('heroCtaWatch')}</ShieldButton>
+                <ShieldButton variant="outline" className="w-full sm:w-auto h-16 md:h-20 text-xl md:text-3xl px-8 md:px-12 border-primary/30 text-primary hover:bg-primary/5">{t('heroCtaWatch')}</ShieldButton>
               </Link>
             </div>
           </motion.div>
@@ -112,11 +112,11 @@ export default function HomePage() {
       />
 
       {/* Section 2: The Campaign Trail (Timeline) */}
-      <section ref={scrollRef} className="py-10 bg-[#FFF7E6] px-4 overflow-visible relative z-20">
+      <section ref={scrollRef} className="py-12 md:py-20 bg-[#FFF7E6] px-4 overflow-visible relative z-20">
         {/* Parchment Texture */}
         <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('/images/hero-light.png')] mix-blend-overlay grayscale bg-cover" style={{ backgroundImage: `url(${IMAGES.backgrounds.light})` }} />
-        <div className="max-w-6xl mx-auto relative border-b border-stone-200/60 pb-10">
-          <div className="text-center mb-8">
+        <div className="max-w-6xl mx-auto relative border-b border-stone-200/60 pb-12">
+          <div className="text-center mb-10 md:mb-16">
             <BilingualHeader 
               marathi="आमचा सांस्कृतिक प्रवास" 
               english="Our Cultural Journey"
@@ -135,7 +135,7 @@ export default function HomePage() {
             </div>
             
             {/* Balanced Horizontal Timeline Path */}
-            <div className="flex flex-row items-center justify-center relative w-full overflow-x-auto md:overflow-x-visible py-20 no-scrollbar px-4 md:px-0 gap-8 md:gap-16">
+            <div className="flex flex-row items-center justify-start md:justify-center relative w-full overflow-x-auto md:overflow-x-visible py-10 md:py-20 scrollbar-hide px-4 md:px-0 gap-6 md:gap-16">
               {timelineData.map((item, index) => (
                 <div key={index} className="shrink-0">
                   <TimelineMilestone 
@@ -153,36 +153,36 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section className="py-12 bg-background px-4 border-b border-stone-100">
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-8">
-          <div className="lg:w-1/2">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-primary mb-6 font-devanagari">{t('aboutHeading')}</h2>
+      <section className="py-16 md:py-24 bg-background px-4 border-b border-stone-100">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 md:gap-20">
+          <div className="lg:w-1/2 text-center lg:text-left">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-primary mb-6 font-devanagari leading-tight">{t('aboutHeading')}</h2>
             <p className="text-lg md:text-xl text-foreground/80 leading-relaxed font-info font-bold">{t('aboutText')}</p>
           </div>
-          <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+          <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
              <MotionDiv 
                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-               className="p-8 bg-white border border-primary/10 hover:border-primary/30 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm">
-                <span className="text-5xl md:text-6xl font-extrabold text-primary mb-3">
+               className="p-6 md:p-8 bg-white border border-primary/10 hover:border-primary/30 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm">
+                <span className="text-4xl md:text-6xl font-extrabold text-primary mb-2 md:mb-3">
                   <AnimatedCounter from={2020} to={2022} />
                 </span>
-                <span className="text-base font-bold text-foreground opacity-80 uppercase tracking-widest">{t('statsFounded')}</span>
+                <span className="text-xs md:text-base font-bold text-foreground opacity-80 uppercase tracking-widest">{t('statsFounded')}</span>
              </MotionDiv>
              <MotionDiv 
                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.15 }}
-               className="p-8 bg-orange-50 border border-primary/20 hover:border-primary/50 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm">
-                <span className="text-5xl md:text-6xl font-extrabold text-primary mb-3">
+               className="p-6 md:p-8 bg-orange-50 border border-primary/20 hover:border-primary/50 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm">
+                <span className="text-4xl md:text-6xl font-extrabold text-primary mb-2 md:mb-3">
                   <AnimatedCounter from={0} to={100} />+
                 </span>
-                <span className="text-base font-bold text-foreground opacity-80 uppercase tracking-widest">{t('statsMembers')}</span>
+                <span className="text-xs md:text-base font-bold text-foreground opacity-80 uppercase tracking-widest">{t('statsMembers')}</span>
              </MotionDiv>
              <MotionDiv 
                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
-               className="p-6 bg-white border border-primary/10 hover:border-primary/30 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm">
-                <span className="text-4xl md:text-5xl font-extrabold text-primary mb-2">
+               className="p-6 md:p-8 bg-white border border-primary/10 hover:border-primary/30 transition-colors rounded-3xl flex flex-col items-center justify-center text-center shadow-sm">
+                <span className="text-4xl md:text-6xl font-extrabold text-primary mb-2 md:mb-3">
                   <AnimatedCounter from={0} to={7} />
                 </span>
-                <span className="text-[10px] font-bold text-foreground opacity-80 uppercase tracking-[0.15em]">{t('statsTeam')}</span>
+                <span className="text-xs md:text-base font-bold text-foreground opacity-80 uppercase tracking-widest">{t('statsTeam')}</span>
              </MotionDiv>
           </div>
         </div>
@@ -362,15 +362,18 @@ function ActivityCard({ icon, title, delay }: { icon: React.ReactNode, title: st
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-10, 10]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
+    // Only apply effect on non-touch devices (simplistic check)
+    if (window.matchMedia('(pointer: fine)').matches) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const xPct = mouseX / width - 0.5;
+      const yPct = mouseY / height - 0.5;
+      x.set(xPct);
+      y.set(yPct);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -382,7 +385,11 @@ function ActivityCard({ icon, title, delay }: { icon: React.ReactNode, title: st
     <motion.div 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      style={{ 
+        rotateX: window.matchMedia('(pointer: fine)').matches ? rotateX : 0, 
+        rotateY: window.matchMedia('(pointer: fine)').matches ? rotateY : 0, 
+        transformStyle: "preserve-3d" 
+      }}
       initial={{ opacity: 0, scale: 0.9, y: 40 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}

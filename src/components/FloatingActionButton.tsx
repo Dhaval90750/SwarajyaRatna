@@ -13,7 +13,7 @@ export default function FloatingActionButton() {
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-[150] flex flex-col items-center gap-4">
+    <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[150] flex flex-col items-center gap-3 md:gap-4">
       {/* Expanded Menu */}
       {isOpen && (
         <motion.div 

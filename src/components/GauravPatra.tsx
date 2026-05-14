@@ -76,14 +76,15 @@ export default function GauravPatra({ member, name, role, mavalaId, onClose, isS
             {!isStatic && (
               <button 
                 onClick={onClose}
-                className="absolute top-10 left-10 z-50 p-2 bg-[#3B2F2F]/10 hover:bg-[#3B2F2F]/20 rounded-full transition-colors text-[#3B2F2F]"
+                className="absolute top-4 right-4 md:top-8 md:right-8 z-50 p-3 bg-white/80 md:bg-[#3B2F2F]/10 hover:bg-white md:hover:bg-[#3B2F2F]/20 rounded-full transition-colors text-[#3B2F2F] shadow-lg md:shadow-none"
+                aria-label="Close modal"
               >
                 <X size={24} />
               </button>
             )}
 
             {/* Gaurav Patra Content */}
-            <div className="p-12 md:p-16 md:py-14 relative z-10 text-center flex flex-col items-center">
+            <div className="p-6 md:p-16 md:py-14 relative z-10 text-center flex flex-col items-center">
               
               {/* Royal Banner Header */}
               <div className="w-full mb-6 space-y-2 mt-4">

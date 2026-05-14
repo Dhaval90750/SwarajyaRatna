@@ -46,14 +46,14 @@ export default function GalleryModal({ images, initialIndex, onClose }: GalleryM
       >
         <button 
           onClick={onClose}
-          className="absolute top-6 right-6 z-[310] p-3 bg-primary/10 hover:bg-primary/20 rounded-full text-primary transition-all hover:scale-110"
+          className="absolute top-4 right-4 md:top-6 md:right-6 z-[310] p-2 md:p-3 bg-primary/10 hover:bg-primary/20 rounded-full text-primary transition-all hover:scale-110"
         >
-          <X size={28} />
+          <X className="w-6 h-6 md:w-7 md:h-7" />
         </button>
 
         {/* Main Image View */}
         <div 
-          className="relative max-w-[90vw] max-h-[70vh] flex items-center justify-center"
+          className="relative w-full max-w-4xl max-h-[80vh] flex items-center justify-center"
           onClick={(e) => e.stopPropagation()}
         >
           <motion.div
@@ -61,33 +61,33 @@ export default function GalleryModal({ images, initialIndex, onClose }: GalleryM
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="relative rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] bg-white"
+            className="relative rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] bg-white w-full h-full flex items-center justify-center"
           >
             <img 
               src={images[currentIndex]} 
               alt={`Gallery Image ${currentIndex + 1}`}
-              className="max-w-full max-h-[70vh] object-contain block"
+              className="max-w-full max-h-[60vh] md:max-h-[75vh] object-contain block"
             />
             
             {/* Overlay Info - Light Theme */}
-            <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-white via-white/40 to-transparent">
-               <p className="text-primary/60 text-xs font-black uppercase tracking-[0.4em] mb-1">Event Showcase</p>
-               <h3 className="text-stone-800 text-2xl md:text-3xl font-black font-devanagari">स्वराज्यरत्न उपक्रम - {currentIndex + 1}</h3>
+            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 bg-gradient-to-t from-white via-white/60 to-transparent">
+               <p className="text-primary/60 text-[10px] md:text-xs font-black uppercase tracking-[0.4em] mb-1">Event Showcase</p>
+               <h3 className="text-stone-800 text-lg md:text-3xl font-black font-devanagari">स्वराज्यरत्न उपक्रम - {currentIndex + 1}</h3>
             </div>
           </motion.div>
 
           {/* Navigation Buttons */}
           <button 
             onClick={(e) => { e.stopPropagation(); prevImage(); }}
-            className="absolute left-4 md:-left-20 p-4 bg-white shadow-xl hover:bg-primary hover:text-white rounded-full text-primary transition-all hover:scale-110 active:scale-95 border border-primary/10"
+            className="absolute left-2 md:-left-20 p-2 md:p-4 bg-white/90 md:bg-white shadow-xl hover:bg-primary hover:text-white rounded-full text-primary transition-all hover:scale-110 active:scale-95 border border-primary/10 z-20"
           >
-            <ChevronLeft size={32} strokeWidth={3} />
+            <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" strokeWidth={3} />
           </button>
           <button 
             onClick={(e) => { e.stopPropagation(); nextImage(); }}
-            className="absolute right-4 md:-right-20 p-4 bg-white shadow-xl hover:bg-primary hover:text-white rounded-full text-primary transition-all hover:scale-110 active:scale-95 border border-primary/10"
+            className="absolute right-2 md:-right-20 p-2 md:p-4 bg-white/90 md:bg-white shadow-xl hover:bg-primary hover:text-white rounded-full text-primary transition-all hover:scale-110 active:scale-95 border border-primary/10 z-20"
           >
-            <ChevronRight size={32} strokeWidth={3} />
+            <ChevronRight className="w-6 h-6 md:w-8 md:h-8" strokeWidth={3} />
           </button>
         </div>
 
